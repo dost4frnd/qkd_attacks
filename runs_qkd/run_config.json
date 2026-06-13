@@ -1,0 +1,18 @@
+{
+  "data": "/home/user/working/all_qkds/qkd_attacks/tfqkd_datasets/tfqkd_clean/tfqkd_flat.csv",
+  "outdir": "/home/user/working/all_qkds/qkd_attacks/runs_qkd",
+  "seed": 42,
+  "epochs": 40,
+  "batch_size": 64,
+  "lr": 0.0005,
+  "weight_decay": 0.0001,
+  "patience": 7,
+  "hidden_dim": 64,
+  "latent_dim": 16,
+  "dropout": 0.1,
+  "num_layers": 1,
+  "transformer_layers": 2,
+  "num_heads": 4,
+  "test_only": false,
+  "save_predictions": false
+}

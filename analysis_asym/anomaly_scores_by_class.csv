@@ -1,0 +1,9 @@
+label,recon_error
+combined_attack,1.6342587
+synchronization_jitter_attack,1.6233643
+phase_drift_attack,1.5775559
+detector_blinding_attack,1.4902616
+wavelength_switching_attack,1.453757
+reference_light_tamper,1.3992752
+asymmetric_loss_attack,0.9764908
+normal,0.7989794

@@ -1,0 +1,9 @@
+{
+  "variant": "tfqkd_unknown",
+  "seed": 42,
+  "samples_per_class": 800,
+  "unknown_samples": 800,
+  "window_len": 32,
+  "outdir": "tfqkd_datasets",
+  "save_format": "csv"
+}

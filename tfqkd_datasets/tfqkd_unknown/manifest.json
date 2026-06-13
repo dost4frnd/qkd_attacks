@@ -1,0 +1,31 @@
+{
+  "variant": "tfqkd_unknown",
+  "n_samples_flat": 7200,
+  "n_rows_long": 230400,
+  "labels": [
+    "asymmetric_loss_attack",
+    "combined_attack",
+    "detector_blinding_attack",
+    "normal",
+    "phase_drift_attack",
+    "reference_light_tamper",
+    "synchronization_jitter_attack",
+    "unknown_attack",
+    "wavelength_switching_attack"
+  ],
+  "core_features": [
+    "phase_lock_error_rad",
+    "phase_drift_rad",
+    "visibility",
+    "ref_power_t_dbm",
+    "ref_wavelength_t_nm",
+    "sync_offset_ps",
+    "asym_loss_db",
+    "coincidence_rate",
+    "qber_phase",
+    "qber_bit",
+    "single_click_a",
+    "single_click_b"
+  ],
+  "window_len": 32
+}

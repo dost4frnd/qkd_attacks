@@ -1,0 +1,10 @@
+{
+  "asymmetric_loss_attack": 0,
+  "combined_attack": 1,
+  "detector_blinding_attack": 2,
+  "normal": 3,
+  "phase_drift_attack": 4,
+  "reference_light_tamper": 5,
+  "synchronization_jitter_attack": 6,
+  "wavelength_switching_attack": 7
+}
