@@ -28,3 +28,7 @@ models/
 # IDE
 .vscode/
 .idea/
+# Large data files
+*_long.csv
+*_flat.csv
+tfqkd_datasets/*_*/*.csv
