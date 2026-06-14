@@ -1,114 +1,75 @@
-# TF-QKD Project Analysis
+# Project Analysis and Figure Strategy
 
-## Current workflow
+## Core assessment
 
-### 1) Dataset generation
-Source:
-- `tfqkd_dataset_factory.py`
+The project direction is strong for an IEEE Transactions-style paper because it separates three distinct tasks:
 
-Variants:
-- clean
-- drift
-- asymmetry
-- unknown attack
+1. **Physics-informed TF-QKD telemetry generation**
+2. **Supervised multiclass intrusion detection**
+3. **One-class / anomaly detection for unknown attacks**
 
-Outputs:
-- `tfqkd_long.csv`
-- `tfqkd_flat.csv`
-- `config.json`
-- `label_map.json`
-- `manifest.json`
+That separation is important because the metrics are not identical.  
+A multiclass classifier should not be plotted on the same bar chart as a one-class detector without clear labeling and task separation.
 
-### 2) Training
-Source:
-- `qkd_train_pipeline_tfqkd.py`
+## What is scientifically strong already
 
-Models:
-- QLSTM
-- LSTM
-- Transformer
-- one-class autoencoder
+- balanced baseline datasets are good for debugging and method comparison
+- the drift and asymmetry variants give physically meaningful perturbations
+- the unknown-attack dataset is useful for zero-day style anomaly testing
+- cross-domain evaluation is much stronger than in-domain evaluation alone
+- attention visualization adds interpretability
 
-Artifacts:
-- checkpoints
-- scaler
-- label encoder
-- feature layout
-- metrics
-- optional predictions
+## What needed correction
 
-### 3) Evaluation and analysis
-Source:
-- `analysis_pipeline.py`
+### 1. Supervised vs anomaly metrics
+The autoencoder must be reported separately from QLSTM / LSTM / Transformer.
 
-Outputs:
-- confusion matrices
-- ROC and PR curves
-- t-SNE embeddings
-- transformer attention
-- feature drift plots
-- cross-domain comparisons
+Recommended split:
+- `supervised_metrics.pdf`
+- `anomaly_metrics.pdf`
 
-### 4) Audit
-Source:
-- `audit_tfqkd_outputs.py`
+### 2. PDF output
+All main figures should be PDF, not PNG, to simplify LaTeX embedding.
 
-Checks:
-- missing files
-- NaN / inf values
-- duplicates
-- label balance
-- sequence layout consistency
-- prediction probability sanity
-- metric bounds
-
-### 5) Paper-ready export
-Source:
-- `paper_ready_export.sh`
-
-Purpose:
-- flatten the important figures/tables
-- convert plots to PDF
-- create a LaTeX-ready asset set
-
-### 6) Project upload flattening
-Source:
-- `upload_ready.sh`
-
-Purpose:
-- flatten the whole project into a single upload folder
-- add compact descriptions for later prompting
-
-## Scientific emphasis
-
-The strongest part of the study is the **cross-domain TF-QKD robustness question**:
-
+### 3. Cross-domain tests
+The strongest claim comes from:
 - train on clean
-- evaluate on drift
-- evaluate on asymmetry
-- evaluate on unknown attack
+- test on drift
+- test on asym
+- test on unknown
 
-This directly tests whether the models learn TF-QKD physics rather than memorizing a single synthetic distribution.
+### 4. Unknown attacks
+Unknown labels should be treated as out-of-distribution for anomaly detection, not forced into the supervised fairness comparison.
 
-## Suggested paper contribution framing
+## Figure policy
 
-1. Physics-informed TF-QKD telemetry generator
-2. Multimodel comparison:
-   - QLSTM
-   - LSTM
-   - Transformer
-   - one-class anomaly detection
-3. Domain shift and unknown-attack robustness
-4. Explainability through transformer attention and drift plots
-5. Audit-friendly reproducibility package
+### Main-text candidates
+- drift phase-lock error
+- drift QBER phase
+- transformer attention
+- supervised confusion matrices
+- supervised metric summary
+- anomaly ROC / PR
+- cross-domain comparison plots
 
-## Practical notes often forgotten
+### Supplementary candidates
+- t-SNE embeddings
+- extra per-feature drift plots
+- score histograms
+- long figure variants
 
-- keep the raw commands
-- keep the flat outputs and long-form telemetry both
-- keep PDF plots for LaTeX
-- keep the audit report
-- keep the exact export manifest
-- keep the dataset manifest and configuration files
-- keep cross-domain results and not only the best run
+## What the current pipeline now does
 
+- produces per-dataset PDF figures
+- stores a `figure_index.json`
+- keeps metrics in separate supervised/anomaly rows
+- supports clean-trained cross-domain evaluation
+- creates cross-domain comparison charts from analysis outputs
+
+## Recommended manuscript angle
+
+The paper should be framed as:
+
+> Physics-informed TF-QKD telemetry anomaly detection with recurrent, attention-based, and one-class models under domain shift.
+
+That is much stronger than a generic “ML on QKD” framing.

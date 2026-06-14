@@ -4,6 +4,6 @@
   "samples_per_class": 800,
   "unknown_samples": 800,
   "window_len": 32,
-  "outdir": "tfqkd_datasets",
+  "outdir": "/home/user/working/all_qkds/qkd_attacks/tfqkd_datasets",
   "save_format": "csv"
 }

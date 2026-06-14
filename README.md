@@ -1,161 +1,134 @@
 # TF-QKD Intrusion Detection Project
 
-This repository contains a complete, reproducible workflow for **Twin-Field QKD (TF-QKD)** telemetry generation, sequence-model training, anomaly detection, cross-domain evaluation, audit checks, and paper-ready export.
+This repository contains a reproducible workflow for Twin-Field QKD (TF-QKD) telemetry generation, attack simulation, sequence-model training, anomaly detection, cross-domain evaluation, audit checking, and paper-ready export.
 
-The project is designed for an IEEE Transactions-style study, with:
-- protocol-aware synthetic TF-QKD telemetry,
-- drift/asymmetry/unknown-attack variants,
-- QLSTM vs LSTM vs Transformer comparison,
-- one-class anomaly detection,
-- cross-domain robustness testing,
-- audit and paper-ready export.
+## What is included
 
-## Repository layout
+- `tfqkd_dataset_factory.py` — generates TF-QKD datasets for clean, drift, asymmetric, and unknown-attack settings
+- `qkd_train_pipeline_tfqkd.py` — trains QLSTM, LSTM, Transformer, and one-class autoencoder baselines
+- `analysis_pipeline.py` — evaluates models, generates PDF figures, attention plots, drift plots, and cross-domain summaries
+- `audit_tfqkd_outputs.py` — checks datasets, run folders, analysis outputs, and paper-ready inventory
+- `generate_dataset_results.sh` — reproduces the full workflow
+- `paper_ready_export.sh` — collects only the figures and CSVs that should be used in the paper
+- `upload_ready.sh` — flattens the repository into single files for ChatGPT Project upload
+- `FILE_DESCRIPTIONS.txt` — compact file inventory for later prompting
 
-```text
-.
-├── analysis_pipeline.py
-├── audit_tfqkd_outputs.py
-├── generate_dataset_results.sh
-├── paper_ready_export.sh
-├── qkd_train_pipeline_tfqkd.py
-├── tfqkd_dataset_factory.py
-├── upload_ready.sh
-├── data/
-├── figures/
-├── results/
-├── paper_ready_results/
-├── docs/
-└── README.md
-```
+## Workflow
 
-## What each major script does
+The intended research sequence is:
 
-- `tfqkd_dataset_factory.py`  
-  Generates synthetic TF-QKD datasets:
-  - clean
-  - drift
-  - asymmetry
-  - unknown attack
+1. Generate all TF-QKD datasets
+2. Train all models on all datasets
+3. Evaluate same-domain results
+4. Train on clean and evaluate on drift / asym / unknown
+5. Compare cross-domain robustness
+6. Audit all outputs
+7. Export paper-ready PDFs and CSVs
+8. Flatten the project for upload and writing
 
-- `qkd_train_pipeline_tfqkd.py`  
-  Trains:
-  - QLSTM
-  - LSTM
-  - Transformer
-  - one-class autoencoder
+## Dataset variants
 
-- `analysis_pipeline.py`  
-  Evaluates trained checkpoints, produces:
-  - confusion matrices
-  - ROC / PR curves
-  - t-SNE embeddings
-  - transformer attention
-  - feature-drift plots
-  - cross-domain comparison plots
+- `tfqkd_clean` — baseline/easy setting
+- `tfqkd_drift` — stronger phase drift and synchronization instability
+- `tfqkd_asym` — asymmetric channel setting
+- `tfqkd_unknown` — includes unseen attacks for anomaly and generalization testing
 
-- `audit_tfqkd_outputs.py`  
-  Checks:
-  - NaN / inf values
-  - duplicates
-  - zero-heavy columns
-  - sequence layout consistency
-  - label balance
-  - metric sanity
-  - prediction probability sanity
-  - missing files
+Each dataset contains:
 
-- `paper_ready_export.sh`  
-  Flattens the key figures and tables into a single `paper_ready_results/` folder and converts plot images to PDF for LaTeX embedding.
+- `tfqkd_long.csv` / `tfqkd_long.parquet` — event-level telemetry for drift and physics plots
+- `tfqkd_flat.csv` / `tfqkd_flat.parquet` — flattened sequence windows for model training
 
-- `upload_ready.sh`  
-  Flattens the project into a single upload directory for ChatGPT Projects with intelligent file names and descriptions.
+## Why long and flat files are separate
 
-## Recommended workflow
+- `tfqkd_long` is used for physics interpretation and drift plots
+- `tfqkd_flat` is used for sequence learning and model training
+
+That separation is intentional and should be preserved in the paper.
+
+## PDF-first outputs
+
+All analysis figures are now generated as **PDF** for LaTeX embedding.
+
+Typical file types in the analysis folders:
+
+- confusion matrices
+- supervised metric summaries
+- anomaly metric summaries
+- ROC / PR curves
+- transformer attention heatmaps
+- t-SNE embeddings
+- drift traces for phase lock / QBER / visibility / reference light
+- cross-domain comparison charts
+
+## Recommended publication structure
+
+For IEEE Transactions, keep the main paper split into:
+
+- TF-QKD simulator and attack model
+- supervised multiclass classification
+- one-class anomaly detection
+- cross-domain robustness
+- explainability and drift analysis
+
+Do **not** merge the one-class detector with the multiclass models into a single fairness bar chart. Treat it as a separate evaluation task.
+
+## Main commands
+
+Generate datasets and run the full workflow:
 
 ```bash
-python tfqkd_dataset_factory.py --all
-python qkd_train_pipeline_tfqkd.py --data data/tfqkd_clean/tfqkd_flat.csv --outdir runs_qkd
-python analysis_pipeline.py --data data/tfqkd_clean/tfqkd_flat.csv --run-dir runs_qkd --outdir analysis_clean
-python analysis_pipeline.py --data data/tfqkd_drift/tfqkd_flat.csv --run-dir runs_qkd --outdir analysis_drift
-python analysis_pipeline.py --data data/tfqkd_asym/tfqkd_flat.csv --run-dir runs_qkd --outdir analysis_asym
-python analysis_pipeline.py --data data/tfqkd_unknown/tfqkd_flat.csv --run-dir runs_qkd --outdir analysis_unknown
-
-python qkd_train_pipeline_tfqkd.py --data data/tfqkd_clean/tfqkd_flat.csv --outdir runs_clean_s
-python qkd_train_pipeline_tfqkd.py --data data/tfqkd_drift/tfqkd_flat.csv --outdir runs_drift_s
-python qkd_train_pipeline_tfqkd.py --data data/tfqkd_asym/tfqkd_flat.csv --outdir runs_asym_s
-python qkd_train_pipeline_tfqkd.py --data data/tfqkd_unknown/tfqkd_flat.csv --outdir runs_unknown_s
-
-python analysis_pipeline.py --data data/tfqkd_clean/tfqkd_flat.csv --run-dir runs_clean_s --outdir analysis_clean_s
-python analysis_pipeline.py --data data/tfqkd_drift/tfqkd_flat.csv --run-dir runs_drift_s --outdir analysis_drift_s
-python analysis_pipeline.py --data data/tfqkd_asym/tfqkd_flat.csv --run-dir runs_asym_s --outdir analysis_asym_s
-python analysis_pipeline.py --data data/tfqkd_unknown/tfqkd_flat.csv --run-dir runs_unknown_s --outdir analysis_unknown_s
-
-python analysis_pipeline.py --compare-dirs   analysis_clean_s analysis_drift_s analysis_asym_s analysis_unknown_s   --outdir cross_domain
-
-python audit_tfqkd_outputs.py   --datasets data/tfqkd_clean/tfqkd_flat.csv data/tfqkd_drift/tfqkd_flat.csv data/tfqkd_asym/tfqkd_flat.csv data/tfqkd_unknown/tfqkd_flat.csv   --runs runs_qkd runs_clean_s runs_drift_s runs_asym_s runs_unknown_s   --reports analysis_clean analysis_drift analysis_asym analysis_unknown analysis_clean_s analysis_drift_s analysis_asym_s analysis_unknown_s cross_domain   --outdir audit_out
-
-bash paper_ready_export.sh   --source-dirs .   --outdir paper_ready_results
+./generate_dataset_results.sh
 ```
 
-## Important outputs
+Export only the paper-ready figures and CSVs:
 
-### Datasets
-- `data/tfqkd_clean/tfqkd_flat.csv`
-- `data/tfqkd_drift/tfqkd_flat.csv`
-- `data/tfqkd_asym/tfqkd_flat.csv`
-- `data/tfqkd_unknown/tfqkd_flat.csv`
+```bash
+./paper_ready_export.sh
+```
 
-Each dataset also keeps a long-form telemetry file:
-- `tfqkd_long.csv`
+Flatten the repository for ChatGPT Project upload:
 
-### Training runs
-- `runs_qkd/`
-- `runs_clean_s/`
-- `runs_drift_s/`
-- `runs_asym_s/`
-- `runs_unknown_s/`
+```bash
+./upload_ready.sh .
+```
 
-### Analysis
-- `analysis_clean/`
-- `analysis_drift/`
-- `analysis_asym/`
-- `analysis_unknown/`
-- `analysis_clean_s/`
-- `analysis_drift_s/`
-- `analysis_asym_s/`
-- `analysis_unknown_s/`
-- `cross_domain/`
+Run the audit separately if needed:
 
-### Paper-ready export
+```bash
+python audit_tfqkd_outputs.py \
+  --datasets tfqkd_datasets/tfqkd_clean/tfqkd_flat.csv \
+             tfqkd_datasets/tfqkd_drift/tfqkd_flat.csv \
+             tfqkd_datasets/tfqkd_asym/tfqkd_flat.csv \
+             tfqkd_datasets/tfqkd_unknown/tfqkd_flat.csv \
+  --runs runs_clean_s runs_drift_s runs_asym_s runs_unknown_s \
+  --reports analysis_clean_s analysis_drift_s analysis_asym_s analysis_unknown_s \
+            analysis_clean_to_clean analysis_clean_to_drift analysis_clean_to_asym analysis_clean_to_unknown \
+            cross_domain_clean_model audit_out \
+  --outdir audit_out
+```
+
+## Directory conventions
+
+- `tfqkd_datasets/` — generated datasets
+- `runs_*` — training outputs and checkpoints
+- `analysis_*` — per-dataset evaluation outputs and figures
+- `cross_domain*` — cross-domain comparison outputs
+- `paper_ready_results/` — selected figures and CSVs for the manuscript
+- `audit_out/` — integrity and reproducibility checks
+
+## Notes for paper drafting
+
+The file `FILE_DESCRIPTIONS.txt` is designed to help later prompts by giving short descriptions of each file.  
+The Markdown notes in `PROJECT_ANALYSIS.md` and `BEST_PDF_SHORTLIST.md` are intended to guide figure selection for the manuscript.
+
+## Reproducibility checklist
+
+Before submission, keep:
+- exact command history
+- `run_config.json`
+- `metrics.csv`
+- `figure_index.json`
+- `audit_report.md` / `audit_report.json`
 - `paper_ready_results/`
-
-This folder is flat and intended for:
-- LaTeX `\includegraphics`
-- figure/table insertion
-- final manuscript assembly
-
-## Notes for IEEE-style writing
-
-Keep the manuscript centered on:
-- TF-QKD protocol realism,
-- phase-lock drift and visibility,
-- reference-light / wavelength sensitivity,
-- unknown-attack generalization,
-- cross-domain robustness,
-- anomaly detection in addition to multiclass classification.
-
-## Reproducibility reminders
-
-Keep:
-- exact commands used,
-- random seeds,
-- `run_config.json`,
-- `feature_layout.json`,
-- `scaler.pkl`,
-- `label_encoder.pkl`,
-- `metrics.csv`,
-- `combined_metrics.csv`,
-- audit reports,
-- paper-ready export manifest.
-
+- the long-format data files for drift plots
+- the flattened training files for model reproducibility

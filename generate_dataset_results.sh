@@ -1,124 +1,106 @@
 #!/usr/bin/env bash
-# Reproducible TF-QKD workflow for the repository.
-# Sequence:
+# =========================================================
+# generate_dataset_results.sh
+#
+# End-to-end TF-QKD research workflow:
 # 1) generate datasets
-# 2) train baseline on clean
-# 3) evaluate baseline clean-trained model on clean/drift/asym/unknown
-# 4) train per-domain model sets
-# 5) evaluate per-domain model sets
-# 6) cross-domain comparison
-# 7) audit outputs
-# 8) export paper-ready figures/tables as PDFs
+# 2) train all models on all datasets
+# 3) evaluate same-domain
+# 4) evaluate clean-trained model on other domains
+# 5) cross-domain comparison
+# 6) audit outputs
+# 7) export paper-ready results
+#
+# PDF-first analysis outputs are produced by analysis_pipeline.py.
+# =========================================================
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PYTHON_BIN="${PYTHON_BIN:-python}"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHON="${PYTHON:-python3}"
 
-DATASET_FACTORY="$SCRIPT_DIR/tfqkd_dataset_factory.py"
-TRAIN_SCRIPT="$SCRIPT_DIR/qkd_train_pipeline_tfqkd.py"
-ANALYSIS_SCRIPT="$SCRIPT_DIR/analysis_pipeline.py"
-AUDIT_SCRIPT="$SCRIPT_DIR/audit_tfqkd_outputs.py"
-EXPORT_SCRIPT="$SCRIPT_DIR/paper_ready_export.sh"
+DATA_DIR="${DATA_DIR:-$ROOT_DIR/tfqkd_datasets}"
+RUN_CLEAN="${RUN_CLEAN:-$ROOT_DIR/runs_clean_s}"
+RUN_DRIFT="${RUN_DRIFT:-$ROOT_DIR/runs_drift_s}"
+RUN_ASYM="${RUN_ASYM:-$ROOT_DIR/runs_asym_s}"
+RUN_UNKNOWN="${RUN_UNKNOWN:-$ROOT_DIR/runs_unknown_s}"
 
-DATASETS=(clean drift asym unknown)
-DATASET_DIR="$SCRIPT_DIR/tfqkd_datasets"
-BASE_RUN_DIR="$SCRIPT_DIR/runs_qkd"
+AN_CLEAN="${AN_CLEAN:-$ROOT_DIR/analysis_clean_s}"
+AN_DRIFT="${AN_DRIFT:-$ROOT_DIR/analysis_drift_s}"
+AN_ASYM="${AN_ASYM:-$ROOT_DIR/analysis_asym_s}"
+AN_UNKNOWN="${AN_UNKNOWN:-$ROOT_DIR/analysis_unknown_s}"
 
-make_dataset() {
-  echo "[1/8] generating datasets"
-  "$PYTHON_BIN" "$DATASET_FACTORY" --all
-}
+AN_CLEAN_TO_CLEAN="${AN_CLEAN_TO_CLEAN:-$ROOT_DIR/analysis_clean_to_clean}"
+AN_CLEAN_TO_DRIFT="${AN_CLEAN_TO_DRIFT:-$ROOT_DIR/analysis_clean_to_drift}"
+AN_CLEAN_TO_ASYM="${AN_CLEAN_TO_ASYM:-$ROOT_DIR/analysis_clean_to_asym}"
+AN_CLEAN_TO_UNKNOWN="${AN_CLEAN_TO_UNKNOWN:-$ROOT_DIR/analysis_clean_to_unknown}"
 
-train_baseline_clean() {
-  echo "[2/8] training baseline on clean"
-  "$PYTHON_BIN" "$TRAIN_SCRIPT" \
-    --data "$DATASET_DIR/tfqkd_clean/tfqkd_flat.csv" \
-    --outdir "$BASE_RUN_DIR"
-}
+CROSS_DIR="${CROSS_DIR:-$ROOT_DIR/cross_domain_clean_model}"
+AUDIT_DIR="${AUDIT_DIR:-$ROOT_DIR/audit_out}"
+PAPER_DIR="${PAPER_DIR:-$ROOT_DIR/paper_ready_results}"
 
-evaluate_baseline_clean() {
-  echo "[3/8] evaluating baseline clean-trained model on all datasets"
-  for ds in "${DATASETS[@]}"; do
-    "$PYTHON_BIN" "$ANALYSIS_SCRIPT" \
-      --data "$DATASET_DIR/tfqkd_${ds}/tfqkd_flat.csv" \
-      --run-dir "$BASE_RUN_DIR" \
-      --outdir "$SCRIPT_DIR/analysis_${ds}"
-  done
-}
+mkdir -p "$DATA_DIR" "$AUDIT_DIR"
 
-train_per_domain() {
-  echo "[4/8] training per-domain model sets"
-  for ds in "${DATASETS[@]}"; do
-    "$PYTHON_BIN" "$TRAIN_SCRIPT" \
-      --data "$DATASET_DIR/tfqkd_${ds}/tfqkd_flat.csv" \
-      --outdir "$SCRIPT_DIR/runs_${ds}_s"
-  done
-}
+# echo "[1/7] generating datasets"
+# "$PYTHON" "$ROOT_DIR/tfqkd_dataset_factory.py" --all --outdir "$DATA_DIR"
 
-evaluate_per_domain() {
-  echo "[5/8] evaluating per-domain trained model sets"
-  for ds in "${DATASETS[@]}"; do
-    "$PYTHON_BIN" "$ANALYSIS_SCRIPT" \
-      --data "$DATASET_DIR/tfqkd_${ds}/tfqkd_flat.csv" \
-      --run-dir "$SCRIPT_DIR/runs_${ds}_s" \
-      --outdir "$SCRIPT_DIR/analysis_${ds}_s"
-  done
-}
+# echo "[2/7] training all models on all datasets"
+# "$PYTHON" "$ROOT_DIR/qkd_train_pipeline_tfqkd.py" --data "$DATA_DIR/tfqkd_clean/tfqkd_flat.csv"   --outdir "$RUN_CLEAN"
+# "$PYTHON" "$ROOT_DIR/qkd_train_pipeline_tfqkd.py" --data "$DATA_DIR/tfqkd_drift/tfqkd_flat.csv"   --outdir "$RUN_DRIFT"
+# "$PYTHON" "$ROOT_DIR/qkd_train_pipeline_tfqkd.py" --data "$DATA_DIR/tfqkd_asym/tfqkd_flat.csv"    --outdir "$RUN_ASYM"
+# "$PYTHON" "$ROOT_DIR/qkd_train_pipeline_tfqkd.py" --data "$DATA_DIR/tfqkd_unknown/tfqkd_flat.csv" --outdir "$RUN_UNKNOWN"
 
-cross_domain_compare() {
-  echo "[6/8] cross-domain comparison"
-  "$PYTHON_BIN" "$ANALYSIS_SCRIPT" --compare-dirs \
-    "$SCRIPT_DIR/analysis_clean_s" \
-    "$SCRIPT_DIR/analysis_drift_s" \
-    "$SCRIPT_DIR/analysis_asym_s" \
-    "$SCRIPT_DIR/analysis_unknown_s" \
-    --outdir "$SCRIPT_DIR/cross_domain"
-}
+echo "[3/7] same-domain evaluation and figure generation"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --data "$DATA_DIR/tfqkd_clean/tfqkd_flat.csv"   --run-dir "$RUN_CLEAN"   --outdir "$AN_CLEAN"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --data "$DATA_DIR/tfqkd_drift/tfqkd_flat.csv"   --run-dir "$RUN_DRIFT"   --outdir "$AN_DRIFT"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --data "$DATA_DIR/tfqkd_asym/tfqkd_flat.csv"    --run-dir "$RUN_ASYM"    --outdir "$AN_ASYM"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --data "$DATA_DIR/tfqkd_unknown/tfqkd_flat.csv" --run-dir "$RUN_UNKNOWN" --outdir "$AN_UNKNOWN"
 
-audit_all() {
-  echo "[7/8] auditing datasets, run dirs, and analysis dirs"
-  "$PYTHON_BIN" "$AUDIT_SCRIPT" \
-    --datasets \
-      "$DATASET_DIR/tfqkd_clean/tfqkd_flat.csv" \
-      "$DATASET_DIR/tfqkd_drift/tfqkd_flat.csv" \
-      "$DATASET_DIR/tfqkd_asym/tfqkd_flat.csv" \
-      "$DATASET_DIR/tfqkd_unknown/tfqkd_flat.csv" \
-    --runs \
-      "$BASE_RUN_DIR" \
-      "$SCRIPT_DIR/runs_clean_s" \
-      "$SCRIPT_DIR/runs_drift_s" \
-      "$SCRIPT_DIR/runs_asym_s" \
-      "$SCRIPT_DIR/runs_unknown_s" \
-    --reports \
-      "$SCRIPT_DIR/analysis_clean" \
-      "$SCRIPT_DIR/analysis_drift" \
-      "$SCRIPT_DIR/analysis_asym" \
-      "$SCRIPT_DIR/analysis_unknown" \
-      "$SCRIPT_DIR/analysis_clean_s" \
-      "$SCRIPT_DIR/analysis_drift_s" \
-      "$SCRIPT_DIR/analysis_asym_s" \
-      "$SCRIPT_DIR/analysis_unknown_s" \
-      "$SCRIPT_DIR/cross_domain" \
-    --outdir "$SCRIPT_DIR/audit_out"
-}
+echo "[4/7] clean-trained model evaluated on other domains"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --data "$DATA_DIR/tfqkd_clean/tfqkd_flat.csv"   --run-dir "$RUN_CLEAN" --outdir "$AN_CLEAN_TO_CLEAN"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --data "$DATA_DIR/tfqkd_drift/tfqkd_flat.csv"   --run-dir "$RUN_CLEAN" --outdir "$AN_CLEAN_TO_DRIFT"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --data "$DATA_DIR/tfqkd_asym/tfqkd_flat.csv"    --run-dir "$RUN_CLEAN" --outdir "$AN_CLEAN_TO_ASYM"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --data "$DATA_DIR/tfqkd_unknown/tfqkd_flat.csv" --run-dir "$RUN_CLEAN" --outdir "$AN_CLEAN_TO_UNKNOWN"
 
-export_paper_ready() {
-  echo "[8/8] exporting paper-ready flat results"
-  bash "$EXPORT_SCRIPT" \
-    --outdir "$SCRIPT_DIR/paper_ready_results" \
-    --source-dirs \
-      "$SCRIPT_DIR" \
-    --keep-top 20
-}
+echo "[5/7] cross-domain comparison"
+"$PYTHON" "$ROOT_DIR/analysis_pipeline.py" --compare-dirs \
+  "$AN_CLEAN_TO_CLEAN" \
+  "$AN_CLEAN_TO_DRIFT" \
+  "$AN_CLEAN_TO_ASYM" \
+  "$AN_CLEAN_TO_UNKNOWN" \
+  --outdir "$CROSS_DIR"
 
-make_dataset
-train_baseline_clean
-evaluate_baseline_clean
-train_per_domain
-evaluate_per_domain
-cross_domain_compare
-audit_all
-export_paper_ready
+echo "[6/7] audit datasets, runs, and analysis outputs"
+"$PYTHON" "$ROOT_DIR/audit_tfqkd_outputs.py" \
+  --datasets \
+    "$DATA_DIR/tfqkd_clean/tfqkd_flat.csv" \
+    "$DATA_DIR/tfqkd_drift/tfqkd_flat.csv" \
+    "$DATA_DIR/tfqkd_asym/tfqkd_flat.csv" \
+    "$DATA_DIR/tfqkd_unknown/tfqkd_flat.csv" \
+  --runs \
+    "$RUN_CLEAN" \
+    "$RUN_DRIFT" \
+    "$RUN_ASYM" \
+    "$RUN_UNKNOWN" \
+  --reports \
+    "$AN_CLEAN" \
+    "$AN_DRIFT" \
+    "$AN_ASYM" \
+    "$AN_UNKNOWN" \
+    "$AN_CLEAN_TO_CLEAN" \
+    "$AN_CLEAN_TO_DRIFT" \
+    "$AN_CLEAN_TO_ASYM" \
+    "$AN_CLEAN_TO_UNKNOWN" \
+    "$CROSS_DIR" \
+  --outdir "$AUDIT_DIR"
 
-echo "[done] all workflow steps completed"
+echo "[7/7] export paper-ready flat results"
+"$ROOT_DIR/paper_ready_export.sh"
+
+echo
+echo "[done] workflow complete"
+echo " - datasets:      $DATA_DIR"
+echo " - runs:          runs_*"
+echo " - analyses:      analysis_* / cross_domain_clean_model"
+echo " - audit:         $AUDIT_DIR"
+echo " - paper-ready:   $PAPER_DIR"
