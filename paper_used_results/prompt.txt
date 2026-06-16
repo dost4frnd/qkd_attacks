@@ -1,0 +1,42 @@
+You can copy and paste the block below:
+
+Role: Act as an expert academic researcher and technical writer specializing in cybersecurity, Quantum Key Distribution (QKD), Deep Learning, and Quantum Machine Learning (QML).
+
+Context:
+I am providing a comprehensive research project on "QKD Attacks Using Deep Learning and QML." The project includes a current manuscript draft (tfqkd_main_r5.pdf and tfqkd_main_r5.tex), execution scripts, analysis documentation, and a large suite of experimental results (CSVs and PDFs).
+
+Data Sources Provided:
+Please base your analysis and modifications strictly on the following provided files:
+
+    Manuscript & Documentation: tfqkd_main_r5.pdf, tfqkd_main_r5.tex, FILE_DESCRIPTIONS.txt, PROJECT_ANALYSIS.md
+
+    Code & Workflows: analysis_pipeline.py, generate_dataset_results.sh
+
+    Tabular Metrics (CSVs): analysis_asym_s__metrics_anomaly.csv, analysis_clean_s__metrics_anomaly.csv, analysis_clean_s__metrics_supervised.csv, analysis_drift_s__metrics_anomaly.csv, analysis_drift_s__metrics_supervised.csv, analysis_unknown_s__metrics_anomaly.csv, cross_domain_clean_model__combined_metrics.csv
+
+    Visualizations & Figures (PDFs): * Confusion Matrices: analysis_clean_s__tfqkd_clean_lstm_confusion.pdf, analysis_clean_s__tfqkd_clean_qlstm_confusion.pdf, analysis_clean_s__tfqkd_clean_transformer_confusion.pdf
+
+        Model Interpretability: analysis_clean_s__tfqkd_clean_transformer_attention.pdf, analysis_clean_s__tfqkd_clean_transformer_tsne.pdf
+
+        Anomaly Detection (Unknown Attacks): analysis_clean_to_unknown__tfqkd_unknown_anomaly_metrics.pdf, analysis_clean_to_unknown__tfqkd_unknown_autoencoder_pr.pdf, analysis_clean_to_unknown__tfqkd_unknown_autoencoder_roc.pdf
+
+        Drift Analysis: analysis_drift_s__tfqkd_drift_drift_phase_lock_error_rad.pdf, analysis_drift_s__tfqkd_drift_drift_qber_phase.pdf
+
+        Cross-Domain Supervised: cross_domain_clean_model__cross_domain_supervised_accuracy.pdf, cross_domain_clean_model__cross_domain_supervised_f1_macro.pdf, cross_domain_clean_model__cross_domain_supervised_roc_auc_ovr_macro.pdf
+
+Objectives:
+
+    Critical Analysis: Conduct a deep, logical, and technical analysis of the research from scratch. Synthesize what the metrics, confusion matrices, and anomaly detection results tell us about the models' performance against QKD attacks.
+
+    Manuscript Enhancement: Based on your analysis, critically review the provided tfqkd_main_r5.tex file.
+
+    Logical & Technical Corrections: Identify any gaps, scientific inaccuracies, or missing context in the manuscript. Use deep research, web search (if necessary for current QKD/QML citations or concepts), and the provided project sources to correct and elevate the paper's scientific rigor.
+
+    Integrate Findings: Ensure that the tables and figures mentioned in the file list are seamlessly integrated, properly referenced, and correctly interpreted within the text.
+
+Output Requirements:
+
+    Begin with a brief, high-level summary of your critical findings from the raw data files.
+
+    Provide the comprehensively updated and logically corrected LaTeX doanloadable code for tfqkd_main_r5.tex. Ensure the tone remains highly academic, dense, and objective.
+

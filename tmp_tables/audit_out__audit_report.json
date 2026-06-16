@@ -1,0 +1,592 @@
+{
+  "datasets": [
+    {
+      "name": "tfqkd_flat.csv",
+      "rows": 6400,
+      "cols": 388,
+      "duplicate_rows": 0,
+      "nan_cells": 0,
+      "inf_cells": 0,
+      "top_zero_fraction_cols": {},
+      "all_zero_numeric_columns": [],
+      "label_counts": {
+        "normal": 800,
+        "phase_drift_attack": 800,
+        "reference_light_tamper": 800,
+        "wavelength_switching_attack": 800,
+        "asymmetric_loss_attack": 800,
+        "synchronization_jitter_attack": 800,
+        "detector_blinding_attack": 800,
+        "combined_attack": 800
+      },
+      "label_balance_ratio": 1.0,
+      "split_counts": {
+        "train": 4480,
+        "test": 960,
+        "val": 960
+      },
+      "split_leakage_sample_ids": 0,
+      "n_sequence_columns": 384,
+      "n_bases": 12,
+      "sequence_len": 32
+    },
+    {
+      "name": "tfqkd_flat.csv",
+      "rows": 6400,
+      "cols": 388,
+      "duplicate_rows": 0,
+      "nan_cells": 0,
+      "inf_cells": 0,
+      "top_zero_fraction_cols": {},
+      "all_zero_numeric_columns": [],
+      "label_counts": {
+        "normal": 800,
+        "phase_drift_attack": 800,
+        "reference_light_tamper": 800,
+        "wavelength_switching_attack": 800,
+        "asymmetric_loss_attack": 800,
+        "synchronization_jitter_attack": 800,
+        "detector_blinding_attack": 800,
+        "combined_attack": 800
+      },
+      "label_balance_ratio": 1.0,
+      "split_counts": {
+        "train": 4480,
+        "test": 960,
+        "val": 960
+      },
+      "split_leakage_sample_ids": 0,
+      "n_sequence_columns": 384,
+      "n_bases": 12,
+      "sequence_len": 32
+    },
+    {
+      "name": "tfqkd_flat.csv",
+      "rows": 6400,
+      "cols": 388,
+      "duplicate_rows": 0,
+      "nan_cells": 0,
+      "inf_cells": 0,
+      "top_zero_fraction_cols": {},
+      "all_zero_numeric_columns": [],
+      "label_counts": {
+        "normal": 800,
+        "phase_drift_attack": 800,
+        "reference_light_tamper": 800,
+        "wavelength_switching_attack": 800,
+        "asymmetric_loss_attack": 800,
+        "synchronization_jitter_attack": 800,
+        "detector_blinding_attack": 800,
+        "combined_attack": 800
+      },
+      "label_balance_ratio": 1.0,
+      "split_counts": {
+        "train": 4480,
+        "test": 960,
+        "val": 960
+      },
+      "split_leakage_sample_ids": 0,
+      "n_sequence_columns": 384,
+      "n_bases": 12,
+      "sequence_len": 32
+    },
+    {
+      "name": "tfqkd_flat.csv",
+      "rows": 7200,
+      "cols": 388,
+      "duplicate_rows": 0,
+      "nan_cells": 0,
+      "inf_cells": 0,
+      "top_zero_fraction_cols": {},
+      "all_zero_numeric_columns": [],
+      "label_counts": {
+        "normal": 800,
+        "phase_drift_attack": 800,
+        "reference_light_tamper": 800,
+        "wavelength_switching_attack": 800,
+        "asymmetric_loss_attack": 800,
+        "synchronization_jitter_attack": 800,
+        "detector_blinding_attack": 800,
+        "combined_attack": 800,
+        "unknown_attack": 800
+      },
+      "label_balance_ratio": 1.0,
+      "split_counts": {
+        "train": 4480,
+        "test": 1760,
+        "val": 960
+      },
+      "split_leakage_sample_ids": 0,
+      "n_sequence_columns": 384,
+      "n_bases": 12,
+      "sequence_len": 32
+    }
+  ],
+  "runs": [
+    {
+      "run_dir": "/home/user/working/all_qkds/qkd_attacks/runs_clean_s",
+      "missing_files": [],
+      "present_files": [
+        "autoencoder.pt",
+        "feature_layout.json",
+        "label_encoder.pkl",
+        "lstm.pt",
+        "metrics.csv",
+        "qlstm.pt",
+        "run_config.json",
+        "scaler.pkl",
+        "transformer.pt"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 10,
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ],
+      "tasks": {
+        "multiclass": 3,
+        "one_class": 1
+      }
+    },
+    {
+      "run_dir": "/home/user/working/all_qkds/qkd_attacks/runs_drift_s",
+      "missing_files": [],
+      "present_files": [
+        "autoencoder.pt",
+        "feature_layout.json",
+        "label_encoder.pkl",
+        "lstm.pt",
+        "metrics.csv",
+        "qlstm.pt",
+        "run_config.json",
+        "scaler.pkl",
+        "transformer.pt"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 10,
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ],
+      "tasks": {
+        "multiclass": 3,
+        "one_class": 1
+      }
+    },
+    {
+      "run_dir": "/home/user/working/all_qkds/qkd_attacks/runs_asym_s",
+      "missing_files": [],
+      "present_files": [
+        "autoencoder.pt",
+        "feature_layout.json",
+        "label_encoder.pkl",
+        "lstm.pt",
+        "metrics.csv",
+        "qlstm.pt",
+        "run_config.json",
+        "scaler.pkl",
+        "transformer.pt"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 10,
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ],
+      "tasks": {
+        "multiclass": 3,
+        "one_class": 1
+      }
+    },
+    {
+      "run_dir": "/home/user/working/all_qkds/qkd_attacks/runs_unknown_s",
+      "missing_files": [],
+      "present_files": [
+        "autoencoder.pt",
+        "feature_layout.json",
+        "label_encoder.pkl",
+        "lstm.pt",
+        "metrics.csv",
+        "qlstm.pt",
+        "run_config.json",
+        "scaler.pkl",
+        "transformer.pt"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 10,
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ],
+      "tasks": {
+        "multiclass": 3,
+        "one_class": 1
+      }
+    }
+  ],
+  "reports": [
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/analysis_clean_s",
+      "pdf_count": 17,
+      "csv_count": 3,
+      "pdf_files": [
+        "tfqkd_clean_anomaly_metrics.pdf",
+        "tfqkd_clean_autoencoder_pr.pdf",
+        "tfqkd_clean_autoencoder_roc.pdf",
+        "tfqkd_clean_autoencoder_scores.pdf",
+        "tfqkd_clean_drift_coincidence_rate.pdf",
+        "tfqkd_clean_drift_phase_lock_error_rad.pdf",
+        "tfqkd_clean_drift_qber_bit.pdf",
+        "tfqkd_clean_drift_qber_phase.pdf",
+        "tfqkd_clean_drift_ref_power_t_dbm.pdf",
+        "tfqkd_clean_drift_ref_wavelength_t_nm.pdf",
+        "tfqkd_clean_drift_visibility.pdf",
+        "tfqkd_clean_lstm_confusion.pdf",
+        "tfqkd_clean_qlstm_confusion.pdf",
+        "tfqkd_clean_supervised_metrics.pdf",
+        "tfqkd_clean_transformer_attention.pdf",
+        "tfqkd_clean_transformer_confusion.pdf",
+        "tfqkd_clean_transformer_tsne.pdf"
+      ],
+      "csv_files": [
+        "metrics.csv",
+        "metrics_anomaly.csv",
+        "metrics_supervised.csv"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 17,
+      "task_counts": {
+        "supervised": 3,
+        "anomaly": 1
+      },
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ]
+    },
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/analysis_drift_s",
+      "pdf_count": 17,
+      "csv_count": 3,
+      "pdf_files": [
+        "tfqkd_drift_anomaly_metrics.pdf",
+        "tfqkd_drift_autoencoder_pr.pdf",
+        "tfqkd_drift_autoencoder_roc.pdf",
+        "tfqkd_drift_autoencoder_scores.pdf",
+        "tfqkd_drift_drift_coincidence_rate.pdf",
+        "tfqkd_drift_drift_phase_lock_error_rad.pdf",
+        "tfqkd_drift_drift_qber_bit.pdf",
+        "tfqkd_drift_drift_qber_phase.pdf",
+        "tfqkd_drift_drift_ref_power_t_dbm.pdf",
+        "tfqkd_drift_drift_ref_wavelength_t_nm.pdf",
+        "tfqkd_drift_drift_visibility.pdf",
+        "tfqkd_drift_lstm_confusion.pdf",
+        "tfqkd_drift_qlstm_confusion.pdf",
+        "tfqkd_drift_supervised_metrics.pdf",
+        "tfqkd_drift_transformer_attention.pdf",
+        "tfqkd_drift_transformer_confusion.pdf",
+        "tfqkd_drift_transformer_tsne.pdf"
+      ],
+      "csv_files": [
+        "metrics.csv",
+        "metrics_anomaly.csv",
+        "metrics_supervised.csv"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 17,
+      "task_counts": {
+        "supervised": 3,
+        "anomaly": 1
+      },
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ]
+    },
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/analysis_asym_s",
+      "pdf_count": 17,
+      "csv_count": 3,
+      "pdf_files": [
+        "tfqkd_asym_anomaly_metrics.pdf",
+        "tfqkd_asym_autoencoder_pr.pdf",
+        "tfqkd_asym_autoencoder_roc.pdf",
+        "tfqkd_asym_autoencoder_scores.pdf",
+        "tfqkd_asym_drift_coincidence_rate.pdf",
+        "tfqkd_asym_drift_phase_lock_error_rad.pdf",
+        "tfqkd_asym_drift_qber_bit.pdf",
+        "tfqkd_asym_drift_qber_phase.pdf",
+        "tfqkd_asym_drift_ref_power_t_dbm.pdf",
+        "tfqkd_asym_drift_ref_wavelength_t_nm.pdf",
+        "tfqkd_asym_drift_visibility.pdf",
+        "tfqkd_asym_lstm_confusion.pdf",
+        "tfqkd_asym_qlstm_confusion.pdf",
+        "tfqkd_asym_supervised_metrics.pdf",
+        "tfqkd_asym_transformer_attention.pdf",
+        "tfqkd_asym_transformer_confusion.pdf",
+        "tfqkd_asym_transformer_tsne.pdf"
+      ],
+      "csv_files": [
+        "metrics.csv",
+        "metrics_anomaly.csv",
+        "metrics_supervised.csv"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 17,
+      "task_counts": {
+        "supervised": 3,
+        "anomaly": 1
+      },
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ]
+    },
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/analysis_unknown_s",
+      "pdf_count": 17,
+      "csv_count": 3,
+      "pdf_files": [
+        "tfqkd_unknown_anomaly_metrics.pdf",
+        "tfqkd_unknown_autoencoder_pr.pdf",
+        "tfqkd_unknown_autoencoder_roc.pdf",
+        "tfqkd_unknown_autoencoder_scores.pdf",
+        "tfqkd_unknown_drift_coincidence_rate.pdf",
+        "tfqkd_unknown_drift_phase_lock_error_rad.pdf",
+        "tfqkd_unknown_drift_qber_bit.pdf",
+        "tfqkd_unknown_drift_qber_phase.pdf",
+        "tfqkd_unknown_drift_ref_power_t_dbm.pdf",
+        "tfqkd_unknown_drift_ref_wavelength_t_nm.pdf",
+        "tfqkd_unknown_drift_visibility.pdf",
+        "tfqkd_unknown_lstm_confusion.pdf",
+        "tfqkd_unknown_qlstm_confusion.pdf",
+        "tfqkd_unknown_supervised_metrics.pdf",
+        "tfqkd_unknown_transformer_attention.pdf",
+        "tfqkd_unknown_transformer_confusion.pdf",
+        "tfqkd_unknown_transformer_tsne.pdf"
+      ],
+      "csv_files": [
+        "metrics.csv",
+        "metrics_anomaly.csv",
+        "metrics_supervised.csv"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 17,
+      "task_counts": {
+        "supervised": 3,
+        "anomaly": 1
+      },
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ]
+    },
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/analysis_clean_to_clean",
+      "pdf_count": 17,
+      "csv_count": 3,
+      "pdf_files": [
+        "tfqkd_clean_anomaly_metrics.pdf",
+        "tfqkd_clean_autoencoder_pr.pdf",
+        "tfqkd_clean_autoencoder_roc.pdf",
+        "tfqkd_clean_autoencoder_scores.pdf",
+        "tfqkd_clean_drift_coincidence_rate.pdf",
+        "tfqkd_clean_drift_phase_lock_error_rad.pdf",
+        "tfqkd_clean_drift_qber_bit.pdf",
+        "tfqkd_clean_drift_qber_phase.pdf",
+        "tfqkd_clean_drift_ref_power_t_dbm.pdf",
+        "tfqkd_clean_drift_ref_wavelength_t_nm.pdf",
+        "tfqkd_clean_drift_visibility.pdf",
+        "tfqkd_clean_lstm_confusion.pdf",
+        "tfqkd_clean_qlstm_confusion.pdf",
+        "tfqkd_clean_supervised_metrics.pdf",
+        "tfqkd_clean_transformer_attention.pdf",
+        "tfqkd_clean_transformer_confusion.pdf",
+        "tfqkd_clean_transformer_tsne.pdf"
+      ],
+      "csv_files": [
+        "metrics.csv",
+        "metrics_anomaly.csv",
+        "metrics_supervised.csv"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 17,
+      "task_counts": {
+        "supervised": 3,
+        "anomaly": 1
+      },
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ]
+    },
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/analysis_clean_to_drift",
+      "pdf_count": 17,
+      "csv_count": 3,
+      "pdf_files": [
+        "tfqkd_drift_anomaly_metrics.pdf",
+        "tfqkd_drift_autoencoder_pr.pdf",
+        "tfqkd_drift_autoencoder_roc.pdf",
+        "tfqkd_drift_autoencoder_scores.pdf",
+        "tfqkd_drift_drift_coincidence_rate.pdf",
+        "tfqkd_drift_drift_phase_lock_error_rad.pdf",
+        "tfqkd_drift_drift_qber_bit.pdf",
+        "tfqkd_drift_drift_qber_phase.pdf",
+        "tfqkd_drift_drift_ref_power_t_dbm.pdf",
+        "tfqkd_drift_drift_ref_wavelength_t_nm.pdf",
+        "tfqkd_drift_drift_visibility.pdf",
+        "tfqkd_drift_lstm_confusion.pdf",
+        "tfqkd_drift_qlstm_confusion.pdf",
+        "tfqkd_drift_supervised_metrics.pdf",
+        "tfqkd_drift_transformer_attention.pdf",
+        "tfqkd_drift_transformer_confusion.pdf",
+        "tfqkd_drift_transformer_tsne.pdf"
+      ],
+      "csv_files": [
+        "metrics.csv",
+        "metrics_anomaly.csv",
+        "metrics_supervised.csv"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 17,
+      "task_counts": {
+        "supervised": 3,
+        "anomaly": 1
+      },
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ]
+    },
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/analysis_clean_to_asym",
+      "pdf_count": 17,
+      "csv_count": 3,
+      "pdf_files": [
+        "tfqkd_asym_anomaly_metrics.pdf",
+        "tfqkd_asym_autoencoder_pr.pdf",
+        "tfqkd_asym_autoencoder_roc.pdf",
+        "tfqkd_asym_autoencoder_scores.pdf",
+        "tfqkd_asym_drift_coincidence_rate.pdf",
+        "tfqkd_asym_drift_phase_lock_error_rad.pdf",
+        "tfqkd_asym_drift_qber_bit.pdf",
+        "tfqkd_asym_drift_qber_phase.pdf",
+        "tfqkd_asym_drift_ref_power_t_dbm.pdf",
+        "tfqkd_asym_drift_ref_wavelength_t_nm.pdf",
+        "tfqkd_asym_drift_visibility.pdf",
+        "tfqkd_asym_lstm_confusion.pdf",
+        "tfqkd_asym_qlstm_confusion.pdf",
+        "tfqkd_asym_supervised_metrics.pdf",
+        "tfqkd_asym_transformer_attention.pdf",
+        "tfqkd_asym_transformer_confusion.pdf",
+        "tfqkd_asym_transformer_tsne.pdf"
+      ],
+      "csv_files": [
+        "metrics.csv",
+        "metrics_anomaly.csv",
+        "metrics_supervised.csv"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 17,
+      "task_counts": {
+        "supervised": 3,
+        "anomaly": 1
+      },
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ]
+    },
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/analysis_clean_to_unknown",
+      "pdf_count": 17,
+      "csv_count": 3,
+      "pdf_files": [
+        "tfqkd_unknown_anomaly_metrics.pdf",
+        "tfqkd_unknown_autoencoder_pr.pdf",
+        "tfqkd_unknown_autoencoder_roc.pdf",
+        "tfqkd_unknown_autoencoder_scores.pdf",
+        "tfqkd_unknown_drift_coincidence_rate.pdf",
+        "tfqkd_unknown_drift_phase_lock_error_rad.pdf",
+        "tfqkd_unknown_drift_qber_bit.pdf",
+        "tfqkd_unknown_drift_qber_phase.pdf",
+        "tfqkd_unknown_drift_ref_power_t_dbm.pdf",
+        "tfqkd_unknown_drift_ref_wavelength_t_nm.pdf",
+        "tfqkd_unknown_drift_visibility.pdf",
+        "tfqkd_unknown_lstm_confusion.pdf",
+        "tfqkd_unknown_qlstm_confusion.pdf",
+        "tfqkd_unknown_supervised_metrics.pdf",
+        "tfqkd_unknown_transformer_attention.pdf",
+        "tfqkd_unknown_transformer_confusion.pdf",
+        "tfqkd_unknown_transformer_tsne.pdf"
+      ],
+      "csv_files": [
+        "metrics.csv",
+        "metrics_anomaly.csv",
+        "metrics_supervised.csv"
+      ],
+      "metrics_rows": 4,
+      "metrics_cols": 17,
+      "task_counts": {
+        "supervised": 3,
+        "anomaly": 1
+      },
+      "models": [
+        "qlstm",
+        "lstm",
+        "transformer",
+        "autoencoder"
+      ]
+    },
+    {
+      "analysis_dir": "/home/user/working/all_qkds/qkd_attacks/cross_domain_clean_model",
+      "pdf_count": 8,
+      "csv_count": 1,
+      "pdf_files": [
+        "cross_domain_anomaly_accuracy.pdf",
+        "cross_domain_anomaly_average_precision.pdf",
+        "cross_domain_anomaly_f1_macro.pdf",
+        "cross_domain_anomaly_roc_auc.pdf",
+        "cross_domain_f1_macro.pdf",
+        "cross_domain_supervised_accuracy.pdf",
+        "cross_domain_supervised_f1_macro.pdf",
+        "cross_domain_supervised_roc_auc_ovr_macro.pdf"
+      ],
+      "csv_files": [
+        "combined_metrics.csv"
+      ],
+      "missing_pdf_hints": [
+        "confusion",
+        "supervised_metrics",
+        "anomaly_metrics",
+        "attention",
+        "tsne",
+        "drift_phase_lock_error_rad",
+        "drift_qber_phase"
+      ]
+    }
+  ]
+}

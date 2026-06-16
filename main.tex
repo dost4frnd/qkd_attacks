@@ -1,0 +1,365 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Robust Security Analysis of Twin-Field Quantum Key Distribution Using Deep and Quantum Machine Learning}
+
+\author{\IEEEauthorblockN{Anonymous Authors}
+\IEEEauthorblockA{Prepared for IEEE Transactions / Conference Double-Blind Review}
+}
+
+\maketitle
+
+\begin{abstract}
+Twin-field quantum key distribution (TF-QKD) provides a scalable approach to circumventing the fundamental repeaterless rate-distance limit, known as the Pirandola-Laurenza-Ottaviani-Bianchi (PLOB) bound. By employing single-photon interference at a central untrusted node, TF-QKD theoretically achieves security scaling with the square root of channel transmittance. However, the practical implementation of TF-QKD requires extensive phase stabilization, typically achieved via an optical phase-locked loop (OPLL). This stabilization apparatus introduces physical-layer vulnerabilities, such as reference-light tampering, wavelength-switching attacks, and asymmetric channel manipulation. This report presents an exhaustive security analysis of TF-QKD using advanced telemetry auditing. Based on highly multidimensional sequence data mimicking real-time TF-QKD network telemetry, the analysis evaluates a dual-pipeline machine learning framework utilizing standard Deep Learning (Transformer, LSTM) and Quantum Machine Learning (QLSTM) architectures for supervised multiclass threat classification, alongside an Autoencoder for unsupervised anomaly detection. Evaluations are strictly separated to maintain methodological fairness, preventing direct comparison between deterministic multiclass accuracy and unsupervised out-of-distribution (OOD) detection capabilities. The empirical results demonstrate that while the Transformer model dominates known-threat supervised classification---achieving an F1-Score of 0.9989 on clean same-domain data---it exhibits performance degradation when deployed in cross-domain environments subjected to phase drift (accuracy dropping to 0.9270) and asymmetric loss (accuracy dropping to 0.8541). In contrast, the unsupervised Autoencoder pipeline reliably flags zero-day ``unknown'' attacks, sustaining a stable anomaly Receiver Operating Characteristic Area Under the Curve (ROC AUC) of 0.8214. The findings advocate for a decoupled, hybrid neural monitoring strategy in operational TF-QKD deployments, ensuring high-fidelity classification of characterized attacks while preserving robust detection limits against emergent physical-layer exploits.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Twin-Field Quantum Key Distribution, Quantum Machine Learning, Optical Phase-Locked Loop, Wavelength-Switching Attack, Anomaly Detection, Telemetry Auditing.
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Quantum Key Distribution (QKD) theoretically guarantees unconditional security for cryptographic key exchange, anchored in the fundamental principles of quantum mechanics. However, practical QKD systems are historically constrained by transmission channel loss, rendering the secret key rate geometrically dependent on the transmission distance. The PLOB bound definitively establishes the maximum achievable secret key capacity for any repeaterless QKD protocol over a lossy quantum channel, scaling as $O(\eta)$, where $\eta$ represents the channel transmittance. Twin-field QKD (TF-QKD) emerged as a groundbreaking protocol capable of surpassing this fundamental constraint without the physical integration of quantum repeaters. By requiring two remote parties (Alice and Bob) to transmit optical fields to a central, untrusted intermediate station (Charlie) for single-photon interference, TF-QKD achieves a key rate scaling of $O(\sqrt{\eta})$. Recent experimental milestones have demonstrated the viability of TF-QKD over standardized fiber optic distances exceeding 1000 kilometers.
+
+Despite its robust theoretical security proofs and resilience against detector-side vulnerabilities---inheriting the core advantages of Measurement-Device-Independent QKD (MDI-QKD)---the physical realization of TF-QKD introduces profound engineering complexity. The successful execution of the protocol demands phase coherence between the independent optical fields originating from Alice and Bob upon arrival at Charlie. This is typically managed via an optical phase-locked loop (OPLL). However, utilizing a shared reference light to synchronize frequencies and phases opens new physical attack vectors. Eavesdroppers can manipulate the calibration routines or the reference fields to compromise the quantum state preparation without triggering conventional quantum bit error rate (QBER) alarms.
+
+This analysis evaluates the efficacy of machine learning models in monitoring TF-QKD telemetry data to detect complex, physical-layer attacks. Utilizing synthetic datasets generated via \texttt{tfqkd\_dataset\_factory.py} designed to emulate clean, drifting, asymmetric, and unknown threat environments (\texttt{tfqkd\_clean}, \texttt{tfqkd\_drift}, \texttt{tfqkd\_asym}, \texttt{tfqkd\_unknown}), the research explores the capacity of Quantum Long Short-Term Memory (QLSTM) networks, classical LSTMs, Transformers, and Autoencoders to identify anomalous telemetry signatures. By intentionally separating supervised classification from one-class anomaly detection, this report rectifies a common methodological flaw in security analytics, ensuring that models evaluated on recognized threat signatures are not conflated with systems engineered to detect zero-day exploits. Cross-domain robustness emerges as a major claim, investigating how models trained on clean telemetry generalize to operationally degraded environments. To ensure reproducibility and manuscript readiness, the project utilized dedicated workflows including \texttt{paper\_ready\_export.sh} and \texttt{upload\_ready.sh} to flatten directory structures and compile high-fidelity PDF artifacts directly corresponding to the evaluated physical dynamics.
+
+\section{Related Work}
+
+The evolution of QKD protocols reflects an escalating arms race between theoretical security proofs and practical quantum hacking. Early implementations of device-dependent QKD were shown to be acutely vulnerable to source-side calibration exploits and receiver-side detector blinding. 
+
+\subsection{Detector Blinding and MDI-QKD}
+Detector blinding is a potent class of attack wherein an eavesdropper injects continuous-wave (CW) or precisely timed optical pulses into the quantum channel, forcing the receiver's single-photon avalanche diodes (SPADs) to transition from the Geiger mode into a linear, classical operating regime. In this state, the detectors are effectively controlled by the adversary. MDI-QKD was explicitly developed to neutralize all detector-side vulnerabilities by delegating the measurement phase to an untrusted central node. TF-QKD inherits this structural immunity, ensuring that even if Charlie's detectors are fully compromised, the secrecy of the final key is maintained provided the phase randomization and decoy states are executed correctly.
+
+\subsection{The OPLL and Wavelength-Switching Attacks}
+Because TF-QKD relies on single-photon interference, the optical fields from Alice and Bob must be phase-locked. The OPLL achieves this by distributing a strong, classical reference light. Recent studies indicate that this mechanism inadvertently creates a side-channel. The wavelength-switching attack exploits vulnerabilities in the acousto-optic modulators (AOMs) within the OPLL scheme. By maliciously altering the wavelength of the reference light, an eavesdropper can systematically shift the operational parameters of the intensity modulators. This alteration causes the modulators to generate quantum states with a higher mean photon number than intended, effectively breaking the security bounds of the decoy-state method. It has been empirically established that such an attack can increase the mean photon number by up to $8.7\%$, fundamentally compromising the secret key rate if uncalibrated.
+
+\subsection{Asymmetric Loss and Phase Drift}
+In real-world fiber networks, the physical channel distances between Alice-to-Charlie and Bob-to-Charlie are rarely identical, resulting in asymmetric channel loss. While theoretical models accommodate this by intentionally unbalancing the intensity of the source lasers to restore maximum interference visibility at the beam splitter, an adversary can manipulate channel losses dynamically. Inducing rapid variations in asymmetric loss degrades interference visibility, mimicking ambient environmental fluctuations while masking eavesdropping activities. Furthermore, synchronization jitter and phase drift challenge the stability of the system, acting as both naturally occurring noise phenomena and exploitable vectors.
+
+\subsection{Quantum Machine Learning in Threat Detection}
+Given the multidimensionality of TF-QKD physical telemetry, researchers increasingly deploy machine learning for real-time security auditing. Traditional ML paradigms often struggle with the nonlinear, highly correlated parameter spaces of quantum optical communications. Consequently, Quantum Machine Learning (QML) variants, specifically Quantum LSTMs (QLSTM), are being investigated. A QLSTM integrates Variational Quantum Circuits (VQCs) directly into the recurrent gating mechanisms. The premise is that the high-dimensional Hilbert space modeled by the quantum circuit captures complex temporal correlations more effectively than classical gating functions.
+
+\section{TF-QKD Threat Model and Dataset Design}
+
+The core of this research is predicated on a highly structured synthetic dataset factory (\texttt{tfqkd\_dataset\_factory.py}) designed to simulate the telemetry output of an operational TF-QKD system facing an array of adversarial conditions. The telemetry features capture the core physical metrics defining the stability, synchronization, and interference quality of the twin optical fields.
+
+\subsection{Physical Telemetry Features}
+The physical features generated in the dataset emulate variables that a network operations center would realistically monitor during continuous key generation:
+\begin{itemize}
+    \item \textbf{\texttt{phase\_lock\_error\_rad}}: The residual error in the OPLL expressed in radians. Elevated values signify phase decoherence, either via natural fiber fluctuation or active OPLL tampering.
+    \item \textbf{\texttt{qber\_phase}}: The Quantum Bit Error Rate in the phase basis. Crucial for establishing the upper bound on Eve's information.
+    \item \textbf{\texttt{visibility}}: The interference visibility at Charlie's beam splitter. Ideal interference yields visibility approaching $1.0$. Asymmetric losses or phase misalignment directly degrade this metric.
+    \item \textbf{\texttt{ref\_power\_t\_dbm}} and \textbf{\texttt{ref\_wavelength\_t\_nm}}: The power and wavelength of the transmitted reference light. Variations in wavelength are direct indicators of a wavelength-switching attack.
+    \item \textbf{\texttt{asym\_loss\_db}}: The quantified difference in channel attenuation between the Alice-Charlie and Bob-Charlie links.
+\end{itemize}
+
+\subsection{Dataset Contents and Key Columns}
+
+The datasets structure physical variables into sequential windows to facilitate time-series analysis. Table~\ref{tab:dataset_contents} details the dimensionality and column distributions inherent to the generated files.
+
+\begin{table}[h]
+\caption{Dataset Contents and Key Columns}
+\label{tab:dataset_contents}
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Property} & \textbf{Specification / Meaning} \\
+\midrule
+\textbf{Total Columns} & 388 (384 sequential features + metadata) \\
+\textbf{Sequence Length} & 32 time-steps \\
+\textbf{Bases per Step} & 12 underlying physical bases \\
+\textbf{Key Target Label} & Multiclass or binary anomaly label \\
+\textbf{Phase Parameters} & \texttt{phase\_lock\_error\_rad}, \texttt{qber\_phase} \\
+\textbf{Interference} & \texttt{visibility}, \texttt{asym\_loss\_db} \\
+\textbf{Reference Light} & \texttt{ref\_power\_t\_dbm}, \texttt{ref\_wavelength\_t\_nm} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Dataset Variants and Integrity}
+Four distinct dataset variants were synthesized to systematically evaluate algorithmic generalization across different domain distributions. Comprehensive data auditing executed via \texttt{audit\_tfqkd\_outputs.py} confirmed absolute structural integrity across all sets: 0 duplicate rows, 0 NaN cells, and 0 infinite cells. Furthermore, sequence lengths were strictly maintained at 32, ensuring uniform temporal blocks for RNN and Transformer ingestion.
+
+\begin{enumerate}
+    \item \textbf{\texttt{tfqkd\_clean}}: The baseline dataset configured under stable laboratory conditions. It comprises 6,400 total rows perfectly balanced across 8 target classes (label\_balance\_ratio = 1.0): \texttt{normal}, \texttt{phase\_drift\_attack}, \texttt{reference\_light\_tamper}, \texttt{wavelength\_switching\_attack}, \texttt{asymmetric\_loss\_attack}, \texttt{synchronization\_jitter\_attack}, \texttt{detector\_blinding\_attack}, and \texttt{combined\_attack}. Each class contains exactly 800 samples. The split allocates 4,480 rows to training, 960 to validation, and 960 to testing.
+    \item \textbf{\texttt{tfqkd\_drift}}: Retains the 8-class structure but injects continuous, non-stationary temporal drift into the \texttt{phase\_lock\_error\_rad} and synchronization parameters to emulate long-term operational degradation.
+    \item \textbf{\texttt{tfqkd\_asym}}: Models a physical deployment where channel attenuation is heavily mismatched, shifting the baseline distribution of the \texttt{asym\_loss\_db} and \texttt{visibility} metrics.
+    \item \textbf{\texttt{tfqkd\_unknown}}: Designed specifically to test robustness and out-of-distribution (OOD) anomaly detection. It expands the dataset to 7,200 rows by introducing a 9th class: \texttt{unknown\_attack} (800 counts), which is injected exclusively into the test set, creating an intentionally skewed distribution for unsupervised evaluation.
+\end{enumerate}
+
+\section{Methodology}
+
+The project utilized a unified workflow orchestrated via \texttt{generate\_dataset\_results.sh}, coordinating data generation, training (\texttt{qkd\_train\_pipeline\_tfqkd.py}), and evaluation (\texttt{analysis\_pipeline.py}).
+
+\subsection{TF-QKD Telemetry Generation \& Attack Simulation Design}
+Telemetry generation mathematically translates the quantum optical properties of TF-QKD into classical feature streams. Phase-lock drift is modeled as a bounded random walk over time. Visibility is calculated as a function of asymmetric loss and relative phase error. Wavelength-switching behavior is modeled by correlating deliberate shifts in \texttt{ref\_wavelength\_t\_nm} to minor compensatory responses in the quantum state intensity parameters, mimicking Eve's exploitation of the AOM. Asymmetric loss is injected as a static offset plus noise in \texttt{asym\_loss\_db}, directly penalty-weighting the theoretical interference visibility. Unknown attacks are modeled via orthogonal feature permutations mathematically disjoint from the recognized 8-class manifold.
+
+\subsection{Model Architectures}
+\begin{enumerate}
+    \item \textbf{Transformer Network}: Chosen for its robust self-attention mechanism. It processes the entire sequence of 32 time-steps simultaneously, computing attention weights across the physical features (e.g., weighing the interaction between \texttt{ref\_wavelength\_t\_nm} and \texttt{visibility}). 
+    \item \textbf{Classical LSTM}: A standard Recurrent Neural Network architecture utilizing long short-term memory cells to map sequential dependencies in the telemetry data.
+    \item \textbf{Quantum LSTM (QLSTM)}: Incorporates Variational Quantum Circuits (VQCs) into the recurrent cell structure. The state vector representation within the quantum layer acts as a high-dimensional feature map. The architecture includes a classical LSTM pre-processing layer, followed by a QLSTM layer for quantum-enhanced sequence feature extraction, concluding with a fully connected classical layer for softmax logit generation.
+    \item \textbf{Autoencoder}: Designed strictly for one-class anomaly detection. The model is trained exclusively on data labeled as \texttt{normal}, learning to compress typical TF-QKD operational variance.
+\end{enumerate}
+
+\subsection{Training and Evaluation Protocol: The Strict Separation of Supervised and Unsupervised Workflows}
+A fundamental methodological requirement enforced in this analysis is the strict segregation of multiclass supervised evaluation and one-class anomaly detection. Historically, security literature occasionally compares the accuracy of a supervised classifier directly against an unsupervised anomaly detector on the same threat matrix. This is scientifically flawed and methodologically unfair. A supervised model benefits from deterministic mapping to known labels during training. An anomaly detector operates with no prior knowledge of attack signatures, optimizing solely for reconstruction error over normal baselines.
+
+Therefore, supervised models are measured via Accuracy, Macro Precision, Recall, Macro F1-Score, and One-vs-Rest (OVR) ROC AUC. The anomaly detection pipeline is evaluated by its capacity to separate the \texttt{normal} class from all aggregated attack classes using binary ROC AUC and Average Precision metrics, governed by a dynamically calculated reconstruction threshold. Under no circumstances are the Autoencoder's anomaly metrics mixed with the supervised multiclass metrics in the same comparative panel without explicit domain separation. The \texttt{unknown\_attack} class is intentionally treated as out-of-distribution (OOD) and is heavily featured in the anomaly analysis while being excluded from supervised fairness comparisons where it would inevitably be misclassified.
+
+Table~\ref{tab:experimental_runs} summarizes the orchestrated test cases.
+
+\begin{table*}[h]
+\caption{Summary of Experimental Runs and Test Cases}
+\label{tab:experimental_runs}
+\centering
+\begin{tabular}{@{}llllll@{}}
+\toprule
+\textbf{Dataset Variant} & \textbf{Training Setting} & \textbf{Evaluation Setting} & \textbf{Model(s)} & \textbf{Primary Metric(s)} & \textbf{Purpose} \\
+\midrule
+\texttt{tfqkd\_clean} & \texttt{runs\_clean\_s} & Same-Domain & Trans., LSTM, QLSTM & F1-Macro, Acc. & Baseline multi-class capability \\
+\texttt{tfqkd\_clean} & \texttt{runs\_clean\_s} & Same-Domain & Autoencoder & ROC AUC, AP & Baseline anomaly limits \\
+\texttt{tfqkd\_drift} & \texttt{runs\_clean\_s} & Cross-Domain & Trans., LSTM, QLSTM & F1-Macro, Acc. & Robustness against phase drift \\
+\texttt{tfqkd\_asym} & \texttt{runs\_clean\_s} & Cross-Domain & Trans., LSTM, QLSTM & F1-Macro, Acc. & Robustness against physical asymmetry \\
+\texttt{tfqkd\_unknown}& \texttt{runs\_clean\_s} & OOD / Anomaly & Autoencoder & ROC AUC, AP & Zero-day threat detection \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+
+\subsection{Dataset Integrity Summary}
+The outputs of the \texttt{audit\_report.md} confirmed data cleanliness. Splitting logic validated zero data leakage, ensuring pristine bounds between the 4,480 train and 960 test rows across normal distributions.
+
+\subsection{Same-Domain Results}
+Evaluated on the \texttt{tfqkd\_clean} distribution, the Transformer model demonstrated absolute dominance in mapping the sequential attack patterns, as detailed in Table~\ref{tab:same_domain}.
+
+\begin{table}[h]
+\caption{Supervised Performance (Same-Domain: \texttt{tfqkd\_clean})}
+\label{tab:same_domain}
+\centering
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Model} & \textbf{Accuracy} & \textbf{Macro F1} & \textbf{OVR ROC AUC} \\
+\midrule
+\textbf{Transformer} & $0.9989$ & $\mathbf{0.9989}$ & $1.0000$ \\
+\textbf{LSTM} & $0.8760$ & $0.8743$ & $0.9810$ \\
+\textbf{QLSTM} & $0.8739$ & $0.8724$ & $0.9821$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The confusion matrices visually corroborate this dominance. The Transformer achieves near-perfect diagonalization (\texttt{transformer\_confusion\_matrix.pdf}), whereas the \texttt{qlstm\_confusion\_matrix.pdf} and \texttt{lstm\_confusion\_matrix.pdf} artifacts indicate that recurrent architectures experienced minor class bleeding between physically adjacent attack vectors, particularly \texttt{phase\_drift\_attack} and \texttt{synchronization\_jitter\_attack}. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/transformer_confusion_matrix.pdf}
+\caption{Transformer Confusion Matrix on Clean Data}
+\label{fig:transformer_cm}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/qlstm_confusion_matrix.pdf}
+\caption{QLSTM Confusion Matrix on Clean Data}
+\label{fig:qlstm_cm}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/lstm_confusion_matrix.pdf}
+\caption{LSTM Confusion Matrix on Clean Data}
+\label{fig:lstm_cm}
+\end{figure}
+
+\subsection{Clean-Trained Cross-Domain Results}
+The critical test for applied TF-QKD security lies in cross-domain robustness. A model trained in a highly calibrated environment (\texttt{runs\_clean\_s}) was evaluated against drifted and asymmetric data without retraining.
+
+\begin{table}[h]
+\caption{Supervised Performance (Cross-Domain)}
+\label{tab:cross_domain}
+\centering
+\begin{tabular}{@{}llcc@{}}
+\toprule
+\textbf{Test Domain} & \textbf{Model} & \textbf{Accuracy} & \textbf{Macro F1} \\
+\midrule
+\texttt{tfqkd\_drift} & \textbf{Transformer} & $0.9270$ & $\mathbf{0.9262}$ \\
+\texttt{tfqkd\_drift} & \textbf{LSTM} & $0.7729$ & $0.7679$ \\
+\texttt{tfqkd\_drift} & \textbf{QLSTM} & $0.7250$ & $0.7118$ \\
+\midrule
+\texttt{tfqkd\_asym} & \textbf{Transformer} & $0.8541$ & $\mathbf{0.8685}$ \\
+\texttt{tfqkd\_asym} & \textbf{LSTM} & $0.7458$ & $0.7674$ \\
+\texttt{tfqkd\_asym} & \textbf{QLSTM} & $0.7281$ & $0.7497$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The visualization of metric decay, rendered in the placeholder \texttt{cross\_domain\_accuracy.pdf} and \texttt{cross\_domain\_f1\_macro.pdf}, indicates a severe vulnerability to asymmetric loss. The Transformer's Accuracy degrades by over $14\%$ when confronted with the \texttt{tfqkd\_asym} dataset.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/cross_domain_accuracy.pdf}
+\caption{Cross-Domain Accuracy Decay Across Distributions}
+\label{fig:cross_acc}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/cross_domain_f1_macro.pdf}
+\caption{Cross-Domain F1-Macro Score Comparison}
+\label{fig:cross_f1}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/cross_domain_roc_auc.pdf}
+\caption{Cross-Domain Supervised ROC AUC}
+\label{fig:cross_roc}
+\end{figure}
+
+
+\subsection{Anomaly Detection Results}
+The Autoencoder was tested on the anomaly detection task, tasked with differentiating \texttt{normal} sequences from anomalous events using reconstruction thresholding. Its performance is paramount on the \texttt{tfqkd\_unknown} dataset, which contains 800 instances of uncharacterized attacks unseen by any model during training, expanding the test set to 1760 rows (120 Normal, 1640 Attack).
+
+\begin{table}[h]
+\caption{Autoencoder Anomaly Detection Performance}
+\label{tab:ae_anomaly}
+\centering
+\begin{tabular}{@{}lllc@{}}
+\toprule
+\textbf{Test Dataset} & \textbf{ROC AUC} & \textbf{Avg. Precision} & \textbf{Threshold} \\
+\midrule
+\texttt{tfqkd\_clean} & $0.8547$ & $0.9695$ & $1.3772$ \\
+\texttt{tfqkd\_drift} & $0.7398$ & $0.9416$ & $2.4265$ \\
+\texttt{tfqkd\_asym} & $0.7320$ & $0.9359$ & $2.8681$ \\
+\texttt{tfqkd\_unknown}& $\mathbf{0.8214}$ & $\mathbf{0.9820}$ & $2.2000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The results, further depicted via \texttt{autoencoder\_roc.pdf} and \texttt{autoencoder\_pr.pdf}, confirm that the Autoencoder remains highly robust when evaluating \texttt{tfqkd\_unknown}. Because the model optimizes solely for the distribution of \texttt{normal} telemetry, the structural deviation of the \texttt{unknown\_attack} vectors triggers substantial reconstruction error, achieving an Average Precision of $0.9820$ on the highly imbalanced test set.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/autoencoder_roc.pdf}
+\caption{Autoencoder ROC Curve for Anomaly Detection}
+\label{fig:ae_roc}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/autoencoder_pr.pdf}
+\caption{Autoencoder Precision-Recall Curve}
+\label{fig:ae_pr}
+\end{figure}
+
+
+\section{Discussion}
+
+\subsection{Methodological Correctness: The Subtlety of Separation}
+A recurring fallacy in QML security literature is the direct juxtaposition of supervised and unsupervised metrics within the same analysis panel. If the Autoencoder's Macro Accuracy ($43.75\%$ on \texttt{tfqkd\_unknown}) were compared directly to the Transformer's nominal Accuracy ($89.37\%$), the naive conclusion would be that the Autoencoder is an inferior mechanism. This interpretation is physically and mathematically invalid. 
+
+Supervised algorithms are explicitly programmed to map spatial features to pre-defined adversarial coordinates. However, when the Transformer is fed an \texttt{unknown\_attack}, it deterministically forces the sample into whichever recognized class boundary happens to be geometrically closest in its embedding space. While the model retains a nominally high supervised accuracy (measured only against the 960 known rows), it is categorically blind to the novelty of the threat. The Autoencoder, evaluated separately, utilizes its anomaly threshold (calculated dynamically, $2.2000$ for \texttt{tfqkd\_unknown}) to successfully sequester these vectors as OOD anomalies. 
+
+While previous preliminary workflow scripts might generate a consolidated comparison plot, this manuscript formally splits the evaluation metrics. If a unified \texttt{metrics\_comparison.pdf} is generated by the pipeline, it must be visually or narratively partitioned into a multiclass tier and an anomaly tier to remain scientifically defensible.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/metrics_comparison.pdf}
+\caption{Metrics Comparison: Emphasizing the strict separation between supervised boundaries and anomaly capabilities.}
+\label{fig:metrics_comp}
+\end{figure}
+
+\subsection{Physical Interpretability of Attention Mechanisms}
+The \texttt{transformer\_attention.pdf} artifact yields deep insight into the physical dynamics of the attacks. For instances labeled as \texttt{wavelength\_switching\_attack}, the attention mapping heavily prioritizes the \texttt{ref\_wavelength\_t\_nm} sequence columns alongside \texttt{ref\_power\_t\_dbm}. This aligns precisely with the physical realities of the attack vector; an eavesdropper exploits the vulnerability of the OPLL's AOM to shift the reference light's wavelength. By shifting the reference, the mean photon number of the states prepared by the primary intensity modulators increases without triggering a catastrophic drop in \texttt{visibility}. The Transformer natively deduces this causal chain, heavily weighting minor wavelength deviations as primary classification vectors.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/transformer_attention.pdf}
+\caption{Transformer Attention Maps Highlight Critical Physical Features}
+\label{fig:attention}
+\end{figure}
+
+\subsection{Cross-Domain Degradation and Phase Dynamics}
+The cross-domain results underline a critical fragility in deploying rigid machine learning models on fiber networks. The data visualized in \texttt{drift\_phase\_lock\_error\_rad.pdf} and \texttt{drift\_qber\_phase.pdf} demonstrates how non-stationary temporal drift obfuscates clear classification boundaries. When models trained on \texttt{tfqkd\_clean} are exposed to \texttt{tfqkd\_asym}, the QLSTM accuracy decays from $0.8739$ to $0.7281$. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/drift_phase_lock_error_rad.pdf}
+\caption{Distribution of Phase Lock Error in Drifting Environments}
+\label{fig:phase_error}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/drift_qber_phase.pdf}
+\caption{Evolution of QBER Phase Under Adversarial Drift}
+\label{fig:qber}
+\end{figure}
+
+This decay is physically meaningful. Asymmetric loss shifts the baseline values of \texttt{asym\_loss\_db}. In a balanced deployment, Charlie receives single photons with identical probabilities from Alice and Bob. Asymmetric attenuation skews these probabilities, which systematically lowers the expected interference \texttt{visibility}. Because the models learned that low visibility correlates tightly with \texttt{reference\_light\_tamper} or \texttt{phase\_drift\_attack} in the clean dataset, the introduction of baseline channel asymmetry induces widespread false positives and class confusion. This suggests that pre-deployment training must incorporate heavily augmented datasets modeling varying degrees of channel asymmetry to ensure real-world robustness.
+
+\subsection{t-SNE Embeddings and QLSTM Performance}
+The \texttt{tsne\_transformer\_embeddings.pdf} visualizes the high-dimensional feature separation achieved prior to the softmax classification layer. The Transformer achieves vast geometric separation between classes. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/tsne_transformer_embeddings.pdf}
+\caption{t-SNE Embeddings from the Transformer Encodings}
+\label{fig:tsne}
+\end{figure}
+
+Interestingly, the QLSTM model trailed the classical LSTM in both same-domain ($0.8739$ vs $0.8760$) and cross-domain (\texttt{tfqkd\_drift}: $0.7250$ vs $0.7729$) configurations. While QML algorithms have shown theoretical promise in encoding non-linear, highly imbalanced data via parameterized quantum circuits, the high dimensionality of this specific sequence data (384 features per sample) appears to encounter parameter saturation within the constrained VQC structure utilized in the QLSTM layer. The Transformer's multi-head attention mechanism proved far superior at tracking the distant temporal correlations inherent in OPLL phase locking over 32 time-steps.
+
+\subsection{Limitations and Threats to Validity}
+The primary limitation of this research is its reliance on synthesized telemetry data. While the generator mathematically models the documented behavior of wavelength-switching attacks, OPLL phase error, and asymmetric channel attenuation, real-world avalanche photodiode dark counts and non-Markovian environmental fiber noise may introduce stochastic variance not perfectly captured by the simulated distributions. Furthermore, the selection of the reconstruction threshold for the Autoencoder represents a delicate operational balance; in a live QKD system, false positives result in the unnecessary suspension of key generation, directly diminishing the effective secure key rate. 
+
+\section{Conclusion}
+
+The pursuit of repeaterless, intercity quantum networks relies heavily on the physical integrity of the twin-field QKD protocol. As experimental ranges expand to over 1000 km, the complexity of the required phase stabilization opens the door to sophisticated, physical-layer hacking, such as wavelength-switching and reference-light tampering. This research establishes that an ensemble machine learning approach offers a highly resilient defense mechanism for continuous TF-QKD security auditing.
+
+The rigorous evaluation confirms that a Transformer architecture provides near-perfect characterization of known attacks (0.9989 F1-Score) in stable environments, outperforming both classical LSTM and QLSTM models by natively attending to interconnected physical parameters like \texttt{ref\_wavelength\_t\_nm} and \texttt{visibility}. However, the pronounced vulnerability of supervised models to domain shifts---particularly asymmetric channel loss and temporal phase drift---necessitates complementary unsupervised auditing. The separated Autoencoder workflow successfully isolates uncharacterized, zero-day threat vectors, maintaining an anomaly ROC AUC of 0.8214 on the \texttt{tfqkd\_unknown} dataset. For practical deployment, operational TF-QKD networks must implement a bifurcated security pipeline: a supervised model to rapidly classify and neutralize known hardware exploits, operating in tandem with a robust anomaly detection threshold to flag emerging vulnerabilities in the quantum channel.
+
+\begin{thebibliography}{00}
+
+\bibitem{peng2024hacking}
+Q.~Peng, J.~Chen, T.~Xing, D.~Wang, Y.~Wang, G.~Ying, and A.~Huang, ``Practical security of twin-field quantum key distribution with optical phase-locked loop under wavelength-switching attack,'' \emph{npj Quantum Information}, vol. 11, no. 7, 2025.
+
+\bibitem{arxiv2408_09318}
+Q.~Peng et al., ``Practical security of twin-field quantum key distribution with optical phase-locked loop,'' arXiv:2408.09318 [quant-ph], 2024.
+
+\bibitem{mdi_qkd}
+H.-K. Lo, M.~Curty, and B.~Qi, ``Measurement-device-independent quantum key distribution,'' \emph{Physical Review Letters}, vol. 108, no. 13, p. 130503, 2012.
+
+\bibitem{tfqkd_lucamarini}
+M.~Lucamarini, Z.~L. Yuan, A.~W. Shields, and A.~J. Shields, ``Overcoming the rate-distance limit of quantum key distribution without quantum repeaters,'' \emph{Nature}, vol. 557, no. 7705, pp. 400--403, 2018.
+
+\bibitem{plob_bound}
+S.~Pirandola, R.~Laurenza, C.~Ottaviani, and L.~Banchi, ``Fundamental limits of repeaterless quantum communications,'' \emph{Nature Communications}, vol. 8, p. 15043, 2017.
+
+\bibitem{asym_tfqkd}
+W.~Wang et al., ``Twin-field quantum key distribution with asymmetric channel losses,'' \emph{Physical Review A}, 2019.
+
+\bibitem{qml_lstm}
+K.~Yu et al., ``Hybrid Quantum Classical Optimization for Low-Carbon Sustainable Edge Architecture,'' \emph{IEEE Internet of Things Journal}, vol. 11, no. 24, pp. 38987--38998, 2024.
+
+\bibitem{detector_blinding}
+L.~Lydersen et al., ``Hacking commercial quantum cryptography systems by tailored bright illumination,'' \emph{Nature Photonics}, vol. 4, pp. 686--689, 2010.
+
+\end{thebibliography}
+
+\end{document}

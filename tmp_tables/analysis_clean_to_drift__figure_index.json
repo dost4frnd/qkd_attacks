@@ -1,0 +1,104 @@
+[
+  {
+    "file": "tfqkd_drift_qlstm_confusion.pdf",
+    "kind": "confusion_matrix",
+    "model": "qlstm",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_lstm_confusion.pdf",
+    "kind": "confusion_matrix",
+    "model": "lstm",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_transformer_confusion.pdf",
+    "kind": "confusion_matrix",
+    "model": "transformer",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_transformer_tsne.pdf",
+    "kind": "tsne",
+    "model": "transformer",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_transformer_attention.pdf",
+    "kind": "attention",
+    "model": "transformer",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_autoencoder_roc.pdf",
+    "kind": "roc",
+    "model": "autoencoder",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_autoencoder_pr.pdf",
+    "kind": "pr",
+    "model": "autoencoder",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_autoencoder_scores.pdf",
+    "kind": "score_hist",
+    "model": "autoencoder",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_supervised_metrics.pdf",
+    "kind": "metrics",
+    "model": "supervised",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_anomaly_metrics.pdf",
+    "kind": "metrics",
+    "model": "autoencoder",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_drift_phase_lock_error_rad.pdf",
+    "kind": "drift",
+    "model": "all",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_drift_visibility.pdf",
+    "kind": "drift",
+    "model": "all",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_drift_ref_power_t_dbm.pdf",
+    "kind": "drift",
+    "model": "all",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_drift_ref_wavelength_t_nm.pdf",
+    "kind": "drift",
+    "model": "all",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_drift_coincidence_rate.pdf",
+    "kind": "drift",
+    "model": "all",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_drift_qber_phase.pdf",
+    "kind": "drift",
+    "model": "all",
+    "dataset": "tfqkd_drift"
+  },
+  {
+    "file": "tfqkd_drift_drift_qber_bit.pdf",
+    "kind": "drift",
+    "model": "all",
+    "dataset": "tfqkd_drift"
+  }
+]

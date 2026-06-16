@@ -1,0 +1,12 @@
+README.md — top-level project overview and workflow.
+PROJECT_ANALYSIS.md — scientific assessment, figure policy, and paper strategy.
+BEST_PDF_SHORTLIST.md — recommended PDF figures for the manuscript.
+requirements.txt — Python dependencies for dataset generation, training, and analysis.
+qkd_train_pipeline_tfqkd.py — training pipeline for QLSTM, LSTM, Transformer, and autoencoder.
+tfqkd_dataset_factory.py — synthetic TF-QKD dataset generator.
+analysis_pipeline.py — PDF-first evaluation, plotting, attention, drift, and cross-domain analysis.
+audit_tfqkd_outputs.py — integrity checks for datasets, runs, and analysis outputs.
+generate_dataset_results.sh — end-to-end workflow orchestration.
+paper_ready_export.sh — selects paper-ready figures and CSVs into a flat results folder.
+upload_ready.sh — flattens the repository into single files for ChatGPT Project upload.
+research_paper_link.txt — links/references for literature and manuscript support.

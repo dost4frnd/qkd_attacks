@@ -1,0 +1,607 @@
+
+\begin{filecontents*}{tfqkd_merged_references_r7_additions.bib}
+@article{preskill2018quantum,
+  author  = {Preskill, John},
+  title   = {Quantum Computing in the {NISQ} era and beyond},
+  journal = {Quantum},
+  volume  = {2},
+  pages   = {79},
+  year    = {2018},
+  doi     = {10.22331/q-2018-08-06-79},
+  url     = {https://quantum-journal.org/papers/q-2018-08-06-79/}
+}
+
+@article{shor1999polynomial,
+  author  = {Shor, Peter W.},
+  title   = {Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer},
+  journal = {SIAM Journal on Computing},
+  volume  = {26},
+  number  = {5},
+  pages   = {1484--1509},
+  year    = {1997},
+  doi     = {10.1137/S0097539795293172}
+}
+
+@misc{csrcNIST,
+  author       = {{National Institute of Standards and Technology}},
+  title        = {Post-Quantum Cryptography},
+  howpublished = {\url{https://csrc.nist.gov/projects/post-quantum-cryptography}},
+  year         = {2024}
+}
+
+@inproceedings{vaswani2017attention,
+  author    = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia},
+  title     = {Attention Is All You Need},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {30},
+  year      = {2017},
+  url       = {https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf}
+}
+
+@article{chen,
+  author  = {Chen, Samuel Yen-Chi and Yoo, Shinjae and Fang, Yao-Lung L.},
+  title   = {Quantum Long Short-Term Memory},
+  journal = {arXiv preprint arXiv:2009.01783},
+  year    = {2020},
+  url     = {https://arxiv.org/abs/2009.01783}
+}
+
+@article{corli2024review,
+  author  = {Corli, Sebastiano and Moro, Lorenzo and Dragoni, Daniele and Dispenza, Massimiliano and Prati, Enrico},
+  title   = {Quantum machine learning algorithms for anomaly detection: A review},
+  journal = {arXiv preprint arXiv:2408.11047},
+  year    = {2024},
+  url     = {https://arxiv.org/abs/2408.11047}
+}
+
+@article{larocca2024review,
+  author  = {Larocca, Martin and Thanasilp, Supanut and Wang, Samson and Sharma, Kunal and Biamonte, Jacob and Coles, Patrick J. and Cincio, Lukasz and McClean, Jarrod R. and Holmes, Zoe and Cerezo, M.},
+  title   = {A Review of Barren Plateaus in Variational Quantum Computing},
+  journal = {arXiv preprint arXiv:2405.00781},
+  year    = {2024},
+  url     = {https://arxiv.org/abs/2405.00781}
+}
+
+@article{gilfuster2024generalization,
+  author  = {Gil-Fuster, Elies and Eisert, Jens and Bravo-Prieto, Carlos},
+  title   = {Understanding quantum machine learning also requires rethinking generalization},
+  journal = {Nature Communications},
+  volume  = {15},
+  pages   = {2277},
+  year    = {2024},
+  doi     = {10.1038/s41467-024-45882-z},
+  url     = {https://www.nature.com/articles/s41467-024-45882-z}
+}
+
+@article{haug2024qfim,
+  author  = {Haug, Tobias and Kim, M. S.},
+  title   = {Generalization of Quantum Machine Learning Models Using Quantum Fisher Information Metric},
+  journal = {Physical Review Letters},
+  volume  = {133},
+  number  = {5},
+  pages   = {050603},
+  year    = {2024},
+  doi     = {10.1103/PhysRevLett.133.050603},
+  url     = {https://arxiv.org/abs/2303.13462}
+}
+
+@article{lu2020quantum,
+  author  = {Lu, Shaolei and Duan, L.-M. and Deng, D.-L.},
+  title   = {Quantum Adversarial Machine Learning},
+  journal = {Physical Review Research},
+  volume  = {2},
+  number  = {3},
+  pages   = {033212},
+  year    = {2020},
+  doi     = {10.1103/PhysRevResearch.2.033212},
+  url     = {https://arxiv.org/abs/2001.00030}
+}
+
+@article{cerezo2021variational,
+  author  = {Cerezo, Marco and Arrasmith, Andrew and Babbush, Ryan and Benjamin, Simon C. and Endo, Suguru and Fujii, Keisuke and McClean, Jarrod R. and Mitarai, Kosuke and Yuan, Xiao and Cincio, Lukasz and Coles, Patrick J.},
+  title   = {Variational Quantum Algorithms},
+  journal = {Nature Reviews Physics},
+  volume  = {3},
+  year    = {2021},
+  doi     = {10.1038/s42254-021-00348-9},
+  url     = {https://www.nature.com/articles/s42254-021-00348-9}
+}
+
+@article{bergholm2018pennylane,
+  author  = {Bergholm, Ville and Izaac, Josh and Schuld, Maria and Gogolin, Christian and Ahmed, Shahnawaz and Ajith, Vishnu and Alam, M. Sohaib and Alonso-Linaje, Guillermo and others},
+  title   = {PennyLane: Automatic differentiation of hybrid quantum-classical computations},
+  journal = {arXiv preprint arXiv:1811.04968},
+  year    = {2018},
+  url     = {https://arxiv.org/abs/1811.04968}
+}
+\end{filecontents*}
+
+\documentclass[10pt, journal, letterpaper, twocolumn]{IEEEtran}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{braket}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{balance}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+
+\begin{document}
+
+\title{Twin-Field QKD Attack Detection Using Deep and Quantum Sequence Models Under Domain Shift}
+
+\author{\IEEEauthorblockN{Anonymous Authors}
+\IEEEauthorblockA{Prepared for IEEE Transactions Double-Blind Review}
+}
+
+\maketitle
+
+
+\begin{abstract}
+Twin-Field QKD is attractive because it relaxes the repeaterless rate--distance limit, but its practical deployment depends on phase stabilization, reference-light handling, and other hardware details that are exposed to implementation attacks. This paper evaluates a telemetry-based detection pipeline for TF-QKD attacks using supervised sequence models and one-class anomaly detection. The study is built on balanced synthetic datasets for clean, drift, asymmetric-loss, and unknown domains, each with 32 time steps and 12 physical bases. We compare a Transformer, an LSTM, a QLSTM, and an Autoencoder under same-domain, cross-domain, and zero-shot settings. The main result is not that the quantum model dominates, but that the task must be separated correctly: the Transformer is the strongest supervised classifier across all measured domains, whereas the Autoencoder is better interpreted as a ranking-based anomaly scorer than as a thresholded classifier. The drift plots, attention maps, and t-SNE projections show that the telemetry is physically structured, with phase-lock error, QBER phase, and reference power carrying the clearest signatures. The resulting conclusion is operational rather than speculative: robust TF-QKD monitoring should combine a strong closed-set sequence classifier with a separate open-set anomaly detector, rather than collapsing both tasks into one metric.
+\end{abstract}
+
+
+\section{Introduction}
+The long-term security of classical public-key cryptography is threatened by scalable quantum computers, motivating the transition toward post-quantum cryptography and quantum-secure communication systems \cite{preskill2018quantum, shor1999polynomial, csrcNIST}. QKD addresses the key-exchange problem at the physical layer rather than at the computational layer, beginning with BB84 and extending through decoy-state and measurement-device-independent protocols \cite{bb84, pns, hwang, lo2005, mdi}. Twin-Field QKD is especially important because it bypasses the repeaterless rate--distance limit that constrains earlier architectures \cite{tfqkd}. However, that same practicality creates a wider implementation surface, especially around phase stabilization, local reference handling, and detector-side engineering.
+
+The implementation literature is clear that practical QKD is not secured by the abstract protocol alone. Detector blinding, Trojan-horse probing, wavelength-dependent beam-splitter effects, and reference-light manipulation all operate through imperfect hardware rather than through the idealized protocol model \cite{lydersen, makarov, gisin, jain, li2011}. The recent TF-QKD wavelength-switching attack on optical phase-locked-loop hardware is a strong reminder that practical security must be evaluated against the actual telemetry generated by the optical control system, not just against the key-generation equations \cite{peng}.
+
+This paper therefore treats TF-QKD as a sequence-analysis problem. We study whether deep learning can distinguish attack signatures in high-dimensional telemetry, and whether quantum-inspired or quantum-hybrid sequence models provide any measurable advantage over classical baselines. The answer must be empirical, not rhetorical. For that reason, we explicitly separate closed-set supervised classification from open-set anomaly detection and compare models under clean, drifted, asymmetric, and unknown domains \cite{vaswani2017attention, qlstm, chen, corli2024review}. Recent QML studies also show that generalization cannot be inferred from circuit structure alone: barren-plateau mitigation, interpolation capacity, and training-set size interact in ways that resist naive capacity arguments \cite{larocca2024review, gilfuster2024generalization, haug2024qfim}. The central contribution is a dataset- and metrics-driven audit of model behavior under domain shift.
+
+
+\section{Background and Literature Review}
+\subsection{Evolution of QKD Protocols}
+QKD starts from the principle that measurement disturbs quantum states, allowing Alice and Bob to estimate whether a channel has been compromised \cite{bb84}. Practical systems moved from idealized single-photon assumptions toward weak coherent pulses and decoy-state analysis to suppress photon-number-splitting attacks \cite{pns, hwang, lo2005}. The MDI-QKD family reduced detector-side vulnerabilities by moving the measurement to an untrusted relay, but it still inherited the repeaterless loss scaling that motivated TF-QKD in the first place \cite{mdi, tfqkd}. In other words, protocol-level security does not remove the need for implementation-level monitoring.
+
+\subsection{Physical-Layer Attacks on Practical QKD}
+The attack surface in deployed systems is dominated by hardware imperfections. Bright-illumination and detector-control attacks show that avalanche photodiodes can be forced out of Geiger mode, while Trojan-horse probing and wavelength-dependent attacks exploit reflection and spectral mismatch in modulators and beam splitters \cite{lydersen, makarov, gisin, li2011}. A practical review of QKD attacks emphasizes that these issues are not corner cases; they are the normal failure mode of real systems \cite{jain}. In TF-QKD, the OPLL and reference-light path are particularly sensitive, and the recent wavelength-switching attack demonstrates that a small change in the reference wavelength can increase the mean photon number by a non-trivial amount without destroying interference stability \cite{peng}.
+
+\subsection{Quantum Machine Learning and Sequence Models}
+Quantum machine learning is relevant here because the telemetry is sequential and physically coupled across time steps. Quantum kernels, variational circuits, and hybrid recurrent models have all been proposed as sequence learners or anomaly detectors \cite{rebentrost2014quantum, schuld2019quantum, havlicek2019supervised, qlstm, chen, mcclean2018barren, cerezo2021variational, bergholm2018pennylane, data_reuploading}. At the same time, the literature also cautions that parameterized quantum models can be hard to train and should not be overclaimed as universally superior \cite{mcclean2018barren, lu2020quantum, larocca2024review}. Recent work further shows that apparently strong quantum generalization can coexist with memorization behavior, so the correct benchmark is task-specific and not purely architectural \cite{gilfuster2024generalization, haug2024qfim}. In this paper, the classical Transformer is used as a strong baseline because self-attention is a mature sequence model with well-understood behavior \cite{vaswani2017attention}; the QLSTM is used as a hybrid recurrent comparator rather than as a presumed winner.
+
+
+\section{Theoretical Framework and Physical Threat Model}
+\subsection{TF-QKD Baseline Telemetry}
+A simplified TF-QKD telemetry stream at time $t$ can be represented as a vector $x_t \in \mathbb{R}^d$ containing phase-lock error, QBER, reference power, coincidence rate, visibility, and related control signals. The measured interference quality is sensitive to the relative phase error $\delta \phi_t$ and the instantaneous visibility $V_t$, so a compact relation is
+\begin{equation}
+E_t \approx \frac{1 - V_t \cos(\delta \phi_t)}{2} + E_{\mathrm{opt}},
+\end{equation}
+where $E_{\mathrm{opt}}$ absorbs optical misalignment and dark-count effects. In the drift figures, this dependence is visible directly: reference-light tampering separates most clearly in the phase-QBER trace, while the phase-lock-error trace is broader and more noisy \cite{peng}. Figures~\ref{fig:drift_phase} and~\ref{fig:drift_qber} are therefore not just qualitative plots; they are the physical basis for the classification task.
+
+\subsection{Attack Signatures}
+The attack classes in the synthetic benchmark are chosen to reflect implementation vulnerabilities rather than abstract adversarial noise. Detector blinding primarily perturbs detector response and count statistics \cite{lydersen, makarov}; reference-light tampering and wavelength switching alter the OPLL path and can shift the source operating point without obviously breaking interference \cite{gisin, li2011, peng}; asymmetric loss changes the balance of channel transmittances and therefore the global telemetry scale; and synchronization jitter produces a more diffuse drift in timing-related features. The unknown class is treated as open-set traffic, not as another closed-set label, because the correct operational question is whether the model can flag it as out of distribution.
+
+A reconstruction-based anomaly detector is naturally expressed through a scalar score
+\begin{equation}
+s(x) = \lVert x - \hat{x} \rVert_2^2,
+\end{equation}
+where $\hat{x}$ is the autoencoder reconstruction. This score is useful for ranking samples, but it is threshold-sensitive, especially when the class ratio is heavily imbalanced. That distinction matters in the unknown-attack setting, where ROC-AUC and average precision are more stable summaries than raw accuracy.
+
+\section{Dataset Design and Synthetic Telemetry Generation}
+The data audit indicates a structurally clean benchmark: the flattened dataset contains 6,400 rows for the clean, drift, and asymmetric domains, and 7,200 rows for the unknown domain; all sets are balanced across the closed-set classes, with the unknown domain adding a ninth class only for zero-shot testing. The flattened representation contains 384 sequence columns, 12 physical bases, and a sequence length of 32. There are no duplicate rows, no missing values, no infinite values, and no split leakage in the audited artifacts. These properties are summarized in Table~\ref{tab:dataset_design} and Table~\ref{tab:dataset_params}.
+\begin{table}[!htbp]
+\centering
+\caption{TF-QKD Dataset Variations and Attack Distributions}
+\label{tab:dataset_params}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Dataset Variant} & \textbf{Total Samples} & \textbf{Phase Drift Noise} & \textbf{Asym. Loss} \\
+\midrule
+\texttt{tfqkd\_clean} & 6400 & Standard & 0 \\
+\texttt{tfqkd\_drift} & 6400 & Ornstein-Uhlenbeck & 0 \\
+\texttt{tfqkd\_asym} & 6400 & Standard & 3 \\
+\texttt{tfqkd\_unknown} & 7200 & Mixed & 0--3 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+\begin{table*}[!t]
+\centering
+\caption{Dataset Design and Structural Dimensions}
+\label{tab:dataset_design}
+\small
+\begin{tabular}{@{}p{2.6cm}p{8.1cm}p{4.4cm}@{}}
+\toprule
+\textbf{Dataset Variant} & \textbf{Physical Channel Environment Description} & \textbf{Structural Dimensions and Splits} \\
+\midrule
+\textbf{CLEAN Baseline} & Ideal, stable laboratory channel conditions with nominal Gaussian dark counts. Perfectly balanced across 8 classes. & 6,400 rows, 388 columns. Train: 4,480. Test: 960. Val: 960. \\
+\textbf{DRIFT Domain} & Retains the same 8-class label structure but injects continuous, non-stationary phase drift into the telemetry. & 6,400 rows, 388 columns. Train: 4,480. Test: 960. Val: 960. \\
+\textbf{ASYM Domain} & Imposes asymmetric attenuation to shift the visibility and count-rate balance without changing labels. & 6,400 rows, 388 columns. Train: 4,480. Test: 960. Val: 960. \\
+\textbf{UNKNOWN Domain} & Adds a ninth unknown attack class only for zero-shot evaluation of open-set behavior. & 7,200 rows, 388 columns. Train: 4,480. Test: 1,760. Val: 960. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+The unknown domain is the most important stress test because it combines the original eight classes with a held-out attack class that is never used for supervised label training. In the split used here, the test fold includes 1,760 rows, of which 1,640 are attacks and 120 are normal traffic. This class mixture explains why thresholded anomaly metrics and multiclass scores should not be compared directly without qualification. The audit is also structurally clean: the flattened telemetry contains 384 sequence columns, 12 physical bases, and 32 time steps, with zero duplicate rows, zero missing values, zero infinite values, and no sample-id leakage across the train/validation/test split. Those properties matter because the paper is not testing a generic image-style classifier; it is testing whether a physically grounded time-series pipeline can preserve calibration under domain shift while keeping the evaluation protocol leakage-free.
+% \FloatBarrier
+\section{Methodology: Hybrid QLSTM Architecture and Classical Baselines}
+\subsection{Preprocessing, Sequence Geometry, and Split Logic}
+The audited corpus is represented as a tensor $X \in \mathbb{R}^{N \times T \times F}$, where $N$ is the number of telemetry windows, $T=32$ is the sequence length, and $F=12$ is the number of physical bases per timestep. The flattened CSV representation therefore expands to 384 sequence features plus the label column. Each feature channel is standardized using a scaler fit only on the training split, and the same transform is then applied to validation, test, and cross-domain evaluation sets. This is essential: the evaluation is intended to measure domain shift, not leakage from a future distribution into preprocessing.
+
+For supervised classification, only labels present in the fitted encoder vocabulary are considered valid. The unknown attack class is therefore masked out of the closed-set training vocabulary and is used only in open-set and zero-shot evaluation, while the closed-set scores are computed only on the known-label test subset. For anomaly detection, the problem is reduced to binary normal-versus-attack scoring, which is more faithful to operational monitoring than collapsing every model into a single multiclass metric.
+
+\subsection{Classical Architectural Baselines}
+We evaluate three supervised sequence models and one one-class detector. The Transformer is the strongest classical baseline because self-attention can model long-range dependencies without recurrent bottlenecks \cite{vaswani2017attention}. In scaled dot-product form, the attention operator is
+\begin{equation}
+\mathrm{Attn}(Q,K,V)=\mathrm{softmax}\!\left(\frac{QK^{\top}}{\sqrt{d_k}}\right)V,
+\end{equation}
+which allows the model to reweight telemetry windows according to pairwise temporal relevance. A stack of encoder blocks then produces a global representation that is projected to the class logits.
+
+The LSTM provides a standard recurrent comparator for temporal dependencies. Its gate equations are
+\begin{align}
+i_t &= \sigma(W_i[x_t,h_{t-1}] + b_i), \\
+f_t &= \sigma(W_f[x_t,h_{t-1}] + b_f), \\
+o_t &= \sigma(W_o[x_t,h_{t-1}] + b_o), \\
+\tilde{c}_t &= \tanh(W_c[x_t,h_{t-1}] + b_c), \\
+c_t &= f_t \odot c_{t-1} + i_t \odot \tilde{c}_t, \\
+h_t &= o_t \odot \tanh(c_t).
+\end{align}
+The QLSTM replaces the dense recurrent gates with variational quantum circuits and therefore tests whether a hybrid quantum feature map changes the empirical decision boundary \cite{qlstm, chen, bergholm2018pennylane}. The Autoencoder is trained only on normal telemetry and is used strictly as an anomaly scorer.
+
+\subsection{Hybrid QLSTM Construction}
+In the hybrid QLSTM, the classical input at each time step is angle-embedded into a bounded rotation space, followed by entangling variational layers and Pauli-$Z$ measurements. Let the recurrent input be $v_t=[h_{t-1},x_t]$. Because the quantum circuit expects bounded rotation angles, the vector is scaled to $[-\pi,\pi]$ before encoding. The state preparation is written as
+\begin{equation}
+|\psi_{\mathrm{in}}(v_t)\rangle=\bigotimes_{j=1}^{n}R_y(v_{t,j})|0\rangle_j.
+\end{equation}
+If the classical feature dimension exceeds the available qubit count, data re-uploading is used so that multiple encoding blocks can inject the full vector into the circuit without increasing the number of qubits \cite{data_reuploading}.
+
+The trainable quantum operator is taken as a shallow, hardware-efficient ansatz with repeated rotation and entanglement layers,
+\begin{equation}
+U(\theta)=\prod_{\ell=1}^{L}\left(U_{\mathrm{ent}}\prod_{j=1}^{n}U_{\mathrm{rot}}(\theta^{(x)}_{j,\ell},\theta^{(y)}_{j,\ell},\theta^{(z)}_{j,\ell})\right),
+\end{equation}
+where $U_{\mathrm{rot}}(\alpha,\beta,\gamma)=R_z(\gamma)R_y(\beta)R_x(\alpha)$. The corresponding measurement readout is the vector of Pauli-$Z$ expectations,
+\begin{equation}
+ y_{t,j}=\langle\psi_{\mathrm{out}}|\sigma_z^{(j)}|\psi_{\mathrm{out}}\rangle,
+\end{equation}
+which is then passed back into the classical recurrent update. The four gates of the QLSTM cell are therefore
+\begin{align}
+f_t &= \sigma(\mathrm{VQC}_f(v_t,\theta_f)+b_f), \\
+i_t &= \sigma(\mathrm{VQC}_i(v_t,\theta_i)+b_i), \\
+\tilde{c}_t &= \tanh(\mathrm{VQC}_c(v_t,\theta_c)+b_c), \\
+o_t &= \sigma(\mathrm{VQC}_o(v_t,\theta_o)+b_o),
+\end{align}
+with the state recursion
+\begin{align}
+c_t &= f_t \odot c_{t-1} + i_t \odot \tilde{c}_t, \\
+h_t &= o_t \odot \tanh(c_t).
+\end{align}
+The final hidden state $h_T$ is mapped to class logits through a classical dense layer.
+
+\subsection{Training Objective and Optimization}
+The supervised models are trained with categorical cross-entropy over the known classes,
+\begin{equation}
+\mathcal{L}_{\mathrm{sup}}=-\frac{1}{N}\sum_{n=1}^{N}\sum_{c=1}^{C} y_{n,c}\log p_{n,c},
+\end{equation}
+where $p_{n,c}$ denotes the predicted probability for class $c$. The Autoencoder is trained on normal telemetry using mean-squared reconstruction error,
+\begin{equation}
+\mathcal{L}_{\mathrm{ae}}=\frac{1}{N}\sum_{n=1}^{N}\lVert x_n-\hat{x}_n\rVert_2^2.
+\end{equation}
+Inference for the one-class detector uses a reconstruction threshold estimated from the training-normal error distribution. In this work, the threshold is set by the 95th percentile of the normal training error, i.e., $\tau = Q_{0.95}(\{\|x_i-\hat{x}_i\|_2^2 : x_i \in \mathcal{D}^{\mathrm{normal}}_{\mathrm{train}}\})$, which makes the detector sensitive to deviations while remaining stable under small calibration changes.
+
+Because variational circuits are sensitive to barren plateaus and optimization depth, the quantum block is intentionally shallow and hardware-efficient \cite{mcclean2018barren, cerezo2021variational, larocca2024review}. The gradient of any trainable gate parameter is computed with the parameter-shift rule,
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial \theta_k}=\frac{\mathcal{L}(\theta_k+\pi/2)-\mathcal{L}(\theta_k-\pi/2)}{2},
+\end{equation}
+which provides an exact analytic gradient for rotational parameters in the chosen ansatz. This choice is standard in hybrid quantum-classical training and is preferable to finite-difference approximations when the circuit depth remains modest.
+
+\subsection{Strict Separation of Supervised and Anomaly Tasks}
+A key methodological point is that the supervised models and the Autoencoder solve different problems. The supervised task is closed-set label prediction over known attacks; the anomaly task is open-set detection of abnormal telemetry without relying on a fixed label vocabulary. Conflating these two tasks would distort the operating objective and the resulting metrics. Accordingly, the supervised results are reported with Accuracy, Macro Precision, Macro Recall, Macro F1, and one-vs-rest ROC-AUC, while the Autoencoder is reported with ROC-AUC, average precision, thresholded F1, and the reconstruction threshold. This separation is not cosmetic; it prevents a label classifier from being scored against a novelty detector under incompatible target definitions. Algorithm~\ref{alg:evaluation} summarizes the implementation workflow used to generate the figures and metrics.
+
+
+\begin{algorithm}[!t]
+\caption{TF-QKD Telemetry Evaluation and Cross-Domain Scoring}
+\label{alg:evaluation}
+\begin{algorithmic}[1]
+\STATE \textbf{Input:} flattened TF-QKD dataset $\mathcal{D}$, trained checkpoints, scaler, label encoder, and feature layout.
+\STATE Infer the sequence bases and reshape the telemetry into $X \in \mathbb{R}^{N \times T \times F}$.
+\STATE Fit the scaler on the training split only; apply the same transform to validation, test, and cross-domain sets.
+\STATE Mask labels outside the closed-set vocabulary for supervised scoring; retain them only for zero-shot analysis.
+\FOR{each supervised model $m \in \{\text{QLSTM}, \text{LSTM}, \text{Transformer}\}$}
+    \STATE Load the checkpoint for $m$ and evaluate it on the known-label test subset.
+    \STATE Compute Accuracy, Macro Precision, Macro Recall, Macro F1, and OVR ROC-AUC.
+    \IF{$m$ is Transformer}
+        \STATE Extract attention weights and latent embeddings for interpretability plots.
+        \STATE Save the confusion matrix, attention heatmap, and t-SNE projection as PDF figures.
+    \ENDIF
+\ENDFOR
+\STATE Load the Autoencoder and reconstruct the normal training telemetry.
+\STATE Set $\tau = Q_{0.95}(\|x-\hat{x}\|_2^2)$ using normal training reconstruction errors.
+\STATE Score the full test set with $s(x)=\|x-\hat{x}\|_2^2$ and classify anomalies by $\mathbb{1}[s(x)>\tau]$.
+\STATE Compute ROC-AUC, average precision, thresholded F1, and the selected threshold.
+\STATE Save the anomaly ROC, PR, and score-distribution figures, and aggregate metrics across runs if multiple analysis directories are provided.
+\STATE \textbf{Output:} per-dataset metrics CSV files and PDF figures for LaTeX embedding.
+\end{algorithmic}
+\end{algorithm}
+
+% \FloatBarrier
+\section{Comprehensive Experimental Results}
+The empirical picture is consistent across all domains: the Transformer is the best supervised model, the LSTM is usually slightly ahead of the QLSTM, and the Autoencoder is useful mainly as a ranking-based anomaly detector. The important result is not a quantum win; it is the need to separate known-class recognition from unknown-attack scoring. Tables~\ref{tab:clean_metrics}, \ref{tab:drift_metrics}, \ref{tab:cross_domain}, and \ref{tab:anomaly_metrics} should therefore be read as different views of different tasks, not as a single leaderboard. The confusion matrices in Figures~\ref{fig:transformer_conf}--\ref{fig:lstm_conf} show that the clean benchmark is easy to memorize for the Transformer but still non-trivial for the recurrent baselines, primarily because the asymmetric-loss and normal classes overlap.
+\subsection{Baseline Evaluation (Clean Environments)}
+On the clean domain, the Transformer is effectively perfect, with Accuracy and Macro-F1 both at 0.998958 and OVR ROC-AUC at 1.000000, as reported in Table~\ref{tab:clean_metrics}. The QLSTM and LSTM are competitive but clearly lower, both staying around 0.87 Macro-F1. This means that the clean benchmark is not a demonstration of quantum advantage; it is a demonstration that the synthetic classes are separable and that the Transformer can memorize that structure when the domain matches training conditions.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_clean_s__tfqkd_clean_transformer_confusion.pdf}
+    \caption{Transformer confusion matrix on the clean domain. The matrix is nearly diagonal, with only one minor confusion between asymmetric loss and the normal class.}
+    \label{fig:transformer_conf}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_clean_s__tfqkd_clean_qlstm_confusion.pdf}
+    \caption{QLSTM confusion matrix on the clean domain. The main errors occur between asymmetric loss and normal, not across the remaining attack types.}
+    \label{fig:qlstm_conf}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_clean_s__tfqkd_clean_lstm_confusion.pdf}
+    \caption{LSTM confusion matrix on the clean domain. The recurrent baseline exhibits the same asymmetric-loss versus normal overlap seen in the QLSTM, but slightly less stability under shift.}
+    \label{fig:lstm_conf}
+\end{figure}
+
+The clean confusion matrix in Figure~\ref{fig:transformer_conf} is almost fully diagonal, with a single error between asymmetric loss and normal. By contrast, Figures~\ref{fig:qlstm_conf} and~\ref{fig:lstm_conf} show a recurring confusion mode between asymmetric loss and normal, which is the dominant closed-set failure mode in the benchmark. The difference is visible in the matrices and in the numeric summary of Table~\ref{tab:clean_metrics}; it is not a subtle statistical artifact.
+\begin{table}[!htbp]
+\centering
+\caption{Same-Domain Supervised Performance Metrics (CLEAN)}
+\label{tab:clean_metrics}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+% \textbf{Model} & \textbf{Accur} & \textbf{Prec} & \textbf{Rec} & \textbf{F1-Score} & \textbf{ROC-AUC (OVR)} \\
+\textbf{Model} & \textbf{Acc.} & \textbf{Prec.} &
+\textbf{Rec.} & \textbf{F1} & \textbf{AUC$_{\mathrm{OVR}}$} \\
+\midrule
+LSTM & 0.8760 & 0.8749 & 0.8760 & 0.8743 & 0.9810 \\
+QLSTM & 0.8740 & 0.8723 & 0.8740 & 0.8724 & 0.9822 \\
+TRANSFORMER & 0.9990 & 0.9990 & 0.9990 & 0.9990 & 1.0000 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+\subsection{Robustness to Environmental Phase Drift}
+The drift domain tests whether the models separate active attacks from benign non-stationary variation. The Transformer remains the strongest model with 0.9384 Macro-F1 and 0.9944 ROC-AUC, while the LSTM and QLSTM fall to 0.8560 and 0.8311 Macro-F1, respectively, as shown in Table~\ref{tab:drift_metrics}. This is the first point where the earlier narrative about quantum robustness must be corrected: the QLSTM does not outperform the LSTM in this benchmark, and the Transformer remains the most robust supervised model.
+\begin{table}[!htbp]
+\centering
+\caption{Model Robustness under Environmental Phase Drift (DRIFT)}
+\label{tab:drift_metrics}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+% \textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-Score} & \textbf{ROC-AUC (OVR)} \\
+\textbf{Model} & \textbf{Acc.} & \textbf{Prec.} &
+\textbf{F1} & \textbf{AUC$_{\mathrm{OVR}}$} \\
+\midrule
+LSTM & 0.8562 & 0.8568 & 0.8560 & 0.9799 \\
+QLSTM & 0.8427 & 0.8370 & 0.8311 & 0.9787 \\
+TRANSFORMER & 0.9385 & 0.9389 & 0.9384 & 0.9944 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_drift_s__tfqkd_drift_drift_phase_lock_error_rad.pdf}
+    \caption{Mean phase-lock error under drift. The spread is dominated by non-stationary background variation rather than a single class-specific excursion.}
+    \label{fig:drift_phase}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_drift_s__tfqkd_drift_drift_qber_phase.pdf}
+    \caption{Phase-dependent QBER trajectories across attack classes in the drift domain. Reference-light tampering is the most visibly separated trace.}
+    \label{fig:drift_qber}
+\end{figure}
+
+Figures~\ref{fig:drift_phase} and~\ref{fig:drift_qber} show why this happens. The phase-lock-error traces are noisy and partially overlapping across classes, whereas the QBER-phase plot isolates reference-light tampering more clearly than the other attacks. That structure is physically meaningful: drift is not a synthetic nuisance term; it changes the telemetry manifold itself.
+\subsection{Domain Generalization under Asymmetric Loss}
+Asymmetric loss is the harshest closed-set shift in the benchmark because it rescales the optical telemetry rather than simply perturbing it. The Transformer again performs best, but all models degrade relative to the clean domain. Table~\ref{tab:asym_metrics} summarizes the cross-domain numbers for the asymmetric target domain.
+\begin{table}[!htbp]
+\centering
+\caption{Cross-Domain Generalization Metrics (ASYM Domain)}
+\label{tab:asym_metrics}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+% \textbf{Model Architecture} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-Score} & \textbf{ROC-AUC} \\
+\textbf{Model} & \textbf{Acc.} & \textbf{Prec.} &
+\textbf{F1} & \textbf{AUC$_{\mathrm{OVR}}$} \\
+\midrule
+LSTM & 0.7458 & 0.8040 & 0.7675 & 0.9522 \\
+QLSTM & 0.7281 & 0.8056 & 0.7497 & 0.9526 \\
+TRANSFORMER & 0.8542 & 0.9188 & 0.8686 & 0.9890 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+The supervised cross-domain plots in Figures~\ref{fig:cd_acc}--\ref{fig:cd_roc} confirm the same ordering. Figure~\ref{fig:cd_f1} is the most informative because F1 penalizes both false alarms and missed attacks. The Transformer remains above the recurrent baselines in every target domain, and the LSTM is consistently a little stronger than the QLSTM in this synthetic setting.
+\begin{table}[!htbp]
+\centering
+\caption{Cross-Domain Generalization (Clean-Model Evaluation)}
+\label{tab:cross_domain}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}llccc@{}}
+\toprule
+\textbf{Domain} & \textbf{Model} & \textbf{Acc.} &
+\textbf{F1} & \textbf{AUC$_{\mathrm{OVR}}$} \\
+\midrule
+\multirow{3}{*}{CLEAN}
+    & QLSTM       & 0.8740 & 0.8724 & 0.9822 \\
+    & LSTM        & 0.8760 & 0.8743 & 0.9810 \\
+    & Transformer & 0.9990 & 0.9990 & 1.0000 \\
+\midrule
+\multirow{3}{*}{DRIFT}
+    & QLSTM       & 0.7250 & 0.7119 & 0.9560 \\
+    & LSTM        & 0.7729 & 0.7680 & 0.9491 \\
+    & Transformer & 0.9271 & 0.9262 & 0.9882 \\
+\midrule
+\multirow{3}{*}{ASYM}
+    & QLSTM       & 0.7281 & 0.7497 & 0.9526 \\
+    & LSTM        & 0.7458 & 0.7675 & 0.9522 \\
+    & Transformer & 0.8542 & 0.8686 & 0.9890 \\
+\midrule
+\multirow{3}{*}{UNKNOWN}
+    & QLSTM       & 0.7250 & 0.7313 & 0.9495 \\
+    & LSTM        & 0.7875 & 0.7930 & 0.9586 \\
+    & Transformer & 0.8938 & 0.8993 & 0.9917 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+% \begin{table}[!htbp]
+% \centering
+% \caption{Cross-Domain Generalization (Clean-Model Evaluation)}
+% \label{tab:cross_domain}
+% \small
+% \resizebox{\linewidth}{!}{%
+% \begin{tabular}{@{}llccc@{}}
+% \toprule
+% % \textbf{Target Domain} & \textbf{Model} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{ROC-AUC} \\
+% \textbf{Domain} & \textbf{Model} & \textbf{Acc.} & 
+% \textbf{F1} & \textbf{AUC$_{\mathrm{OVR}}$} \\
+% \midrule
+% CLEAN & QLSTM & 0.8740 & 0.8724 & 0.9822 \\
+% CLEAN & LSTM & 0.8760 & 0.8743 & 0.9810 \\
+% CLEAN & TRANSFORMER & 0.9990 & 0.9990 & 1.0000 \\
+% DRIFT & QLSTM & 0.7250 & 0.7119 & 0.9560 \\
+% DRIFT & LSTM & 0.7729 & 0.7680 & 0.9491 \\
+% DRIFT & TRANSFORMER & 0.9271 & 0.9262 & 0.9882 \\
+% ASYM & QLSTM & 0.7281 & 0.7497 & 0.9526 \\
+% ASYM & LSTM & 0.7458 & 0.7675 & 0.9522 \\
+% ASYM & TRANSFORMER & 0.8542 & 0.8686 & 0.9890 \\
+% UNKNOWN & QLSTM & 0.7250 & 0.7313 & 0.9495 \\
+% UNKNOWN & LSTM & 0.7875 & 0.7930 & 0.9586 \\
+% UNKNOWN & TRANSFORMER & 0.8938 & 0.8993 & 0.9917 \\
+% \bottomrule
+% \end{tabular}
+% }
+% \end{table}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/cross_domain_clean_model__cross_domain_supervised_accuracy.pdf}
+    \caption{Cross-domain accuracy for models trained on clean telemetry and evaluated under clean, drift, asymmetric, and unknown domains.}
+    \label{fig:cd_acc}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/cross_domain_clean_model__cross_domain_supervised_f1_macro.pdf}
+    \caption{Cross-domain macro-F1 for clean-trained models. The Transformer remains the most stable supervised model under all target domains.}
+    \label{fig:cd_f1}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/cross_domain_clean_model__cross_domain_supervised_roc_auc_ovr_macro.pdf}
+    \caption{Cross-domain ROC-AUC (OVR macro) for clean-trained supervised models.}
+    \label{fig:cd_roc}
+\end{figure}
+
+% \FloatBarrier
+\subsection{Zero-Shot (Unknown) Attack Isolation}
+The unknown domain is the most relevant operational test because the system must flag attacks that were not included in the closed-set classifier vocabulary. The supervised models still produce useful labels, but their scores should be interpreted as closed-set approximations rather than as zero-shot detectors. In Table~\ref{tab:cross_domain}, the Transformer retains the strongest open-domain supervised performance with 0.8993 Macro-F1 on the unknown set, followed by the LSTM and QLSTM. Again, the ordering is classical, not quantum.
+The Autoencoder is the correct model family to inspect for unknown attacks, but only if it is evaluated as a ranking method. Figure~\ref{fig:unknown_anom_summary} shows that the thresholded F1 is modest because the test split is heavily imbalanced, yet ROC-AUC and average precision remain strong. Table~\ref{tab:anomaly_metrics} gives the full summary.
+\begin{table}[!htbp]
+\centering
+\caption{Autoencoder Zero-Shot Anomaly Detection Performance}
+\label{tab:anomaly_metrics}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+% \textbf{Evaluation Domain} & \textbf{ROC-AUC} & \textbf{Avg Precision (PR)} & \textbf{F1-Score} & \textbf{Threshold} \\
+\textbf{Domain} & \textbf{Avg Prec.} & 
+\textbf{F1} & \textbf{AUC$_{\mathrm{OVR}}$} & \textbf{Thres.} \\
+\midrule
+CLEAN & 0.8548 & 0.9695 & 0.2479 & 1.3773 \\
+DRIFT & 0.7398 & 0.9416 & 0.2902 & 2.4266 \\
+ASYM & 0.7320 & 0.9360 & 0.2238 & 2.8682 \\
+UNKNOWN & 0.8214 & 0.9820 & 0.3776 & 2.2001 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_clean_to_unknown__tfqkd_unknown_anomaly_metrics.pdf}
+    \caption{Thresholded anomaly metrics on the unknown-attacks test split. ROC-AUC and average precision remain strong despite the modest thresholded F1.}
+    \label{fig:unknown_anom_summary}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_clean_to_unknown__tfqkd_unknown_autoencoder_roc.pdf}
+    \caption{Autoencoder ROC curve for unknown-attack detection.}
+    \label{fig:ae_roc}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_clean_to_unknown__tfqkd_unknown_autoencoder_pr.pdf}
+    \caption{Autoencoder precision--recall curve for unknown-attack detection.}
+    \label{fig:ae_pr}
+\end{figure}
+
+The ROC and precision--recall curves in Figures~\ref{fig:ae_roc} and~\ref{fig:ae_pr} are therefore the right summary statistics. The ranking quality is high, especially on the unknown split, but the thresholded label decision remains sensitive to the class mix and the chosen reconstruction threshold. This is exactly the behavior expected from a one-class detector under severe imbalance.
+% \FloatBarrier
+\section{Discussion: Feasibility in the NISQ Era and Interpretability}
+\subsection{Attention and Physical Interpretability}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_clean_s__tfqkd_clean_transformer_attention.pdf}
+    \caption{Transformer attention heatmap on the clean domain. Mid-sequence positions receive the largest average weight.}
+    \label{fig:attn_map}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/analysis_clean_s__tfqkd_clean_transformer_tsne.pdf}
+    \caption{t-SNE projection of Transformer embeddings on the clean domain. The class clusters are well separated, which is consistent with the near-diagonal confusion matrix.}
+    \label{fig:tsne_embed}
+\end{figure}
+
+The attention heatmap in Figure~\ref{fig:attn_map} is not just a visualization artifact. It indicates that the Transformer consistently concentrates weight on mid-sequence timesteps rather than on the full window uniformly. In this benchmark, that is compatible with the telemetry generation process: the attack signatures are time-localized, and the most informative measurements occur after the stabilization loop has settled enough to expose deviations in reference power, wavelength, and phase-lock error. The t-SNE map in Figure~\ref{fig:tsne_embed} supports the same reading by showing well-separated clusters in the learned embedding space.
+\subsection{What the Quantum Baseline Does and Does Not Show}
+The QLSTM is a plausible hybrid model, but the results here do not support a claim of empirical quantum advantage. It is competitive with the LSTM, but it is not the best supervised model in any domain, and it is not the most robust under domain shift. That result is still useful. It means the benchmark is not trivially solved by a small recurrent baseline, and it also means that a compact quantum-hybrid feature map may be worth exploring further if the deployment constraint is parameter budget rather than raw accuracy \cite{qlstm, chen, mcclean2018barren, cerezo2021variational, bergholm2018pennylane, larocca2024review, gilfuster2024generalization, haug2024qfim}. The more conservative interpretation is the correct one: the QLSTM is a viable comparator, not a demonstrated winner.
+\subsection{Deployment Implications}
+For NISQ-era deployment, the most practical architecture is a two-stage monitor. A supervised sequence classifier should handle known attacks and provide operational labels, while a separate one-class detector should score unseen deviations. This split is better aligned with the anomaly-detection literature and avoids the metric leakage that occurs when a thresholded detector is judged as if it were a multiclass classifier \cite{lu, corli2024review, lu2020quantum}. In a real TF-QKD station, the most informative channels are the phase-lock error, QBER phase, reference power, and coincidence rate; those are the signals that should drive both alarm logic and operator dashboards. The physics and the machine-learning results are therefore consistent: the main security problem is not lack of labels, but the mismatch between protocol-level security proofs and hardware-level telemetry.
+
+\FloatBarrier
+
+\section{Conclusion}
+This study evaluated TF-QKD attack detection as a telemetry auditing problem rather than as a pure classification exercise. The data are balanced, physically structured, and leakage-free, but the correct modeling split is still crucial. The Transformer is the strongest supervised model across clean, drift, asymmetric, and unknown domains. The LSTM is consistently slightly better than the QLSTM in this benchmark, so the quantum-hybrid model should be treated as a competitive baseline rather than as an empirically superior one. The Autoencoder is useful for open-set detection, but its value is best expressed through ROC-AUC and average precision rather than through thresholded accuracy alone.
+
+The broader lesson is operational. TF-QKD implementations can be audited with machine learning, but only when the monitoring stack respects the difference between closed-set label recognition and open-set anomaly scoring. In that sense, the contribution of the paper is methodological as much as it is empirical: it shows how to benchmark model behavior under clean, drifted, asymmetric, and unknown threat domains without conflating the metrics.
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{tfqkd_merged_references,tfqkd_merged_references_r7_additions}
+\end{document}

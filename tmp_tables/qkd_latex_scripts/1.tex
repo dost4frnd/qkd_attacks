@@ -1,0 +1,91 @@
+\begin{table}[htbp]
+\centering
+\caption{TF-QKD Dataset Variations and Attack Distributions}
+\label{tab:dataset_params}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Dataset Variant} & \textbf{Total Samples} & \textbf{Phase Drift Noise} & \textbf{Asymmetric Loss} \\ \midrule
+tfqkd\_clean & 6400 & Standard & 0 \\
+tfqkd\_drift & 6400 & Ornstein-Uhlenbeck & 0 \\
+tfqkd\_asym & 6400 & Standard & 3 \\
+tfqkd\_unknown & 7200 & Mixed & 0-3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Same-Domain Supervised Performance Metrics (CLEAN)}
+\label{tab:clean_metrics}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\ \midrule
+QLSTM & 0.8740 & 0.8723 & 0.8740 & 0.8724 \\
+LSTM & 0.8760 & 0.8749 & 0.8760 & 0.8743 \\
+TRANSFORMER & 0.9990 & 0.9990 & 0.9990 & 0.9990 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Model Robustness under Environmental Phase Drift (DRIFT)}
+\label{tab:drift_metrics}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-Score} & \textbf{ROC-AUC (OVR)} \\ \midrule
+QLSTM & 0.8427 & 0.8370 & 0.8311 & 0.9787 \\
+LSTM & 0.8562 & 0.8568 & 0.8560 & 0.9799 \\
+TRANSFORMER & 0.9385 & 0.9389 & 0.9384 & 0.9944 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Cross-Domain Generalization (Clean Model to Target Domains)}
+\label{tab:cross_domain}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+\textbf{Target Domain} & \textbf{Model} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{ROC-AUC} \\ \midrule
+tfqkd\_clean & QLSTM & 0.8740 & 0.8724 & 0.9822 \\
+tfqkd\_clean & LSTM & 0.8760 & 0.8743 & 0.9810 \\
+tfqkd\_clean & TRANSFORMER & 0.9990 & 0.9990 & 1.0000 \\
+tfqkd\_drift & QLSTM & 0.7250 & 0.7119 & 0.9560 \\
+tfqkd\_drift & LSTM & 0.7729 & 0.7680 & 0.9491 \\
+tfqkd\_drift & TRANSFORMER & 0.9271 & 0.9262 & 0.9882 \\
+tfqkd\_asym & QLSTM & 0.7281 & 0.7497 & 0.9526 \\
+tfqkd\_asym & LSTM & 0.7458 & 0.7675 & 0.9522 \\
+tfqkd\_asym & TRANSFORMER & 0.8542 & 0.8686 & 0.9890 \\
+tfqkd\_unknown & QLSTM & 0.7250 & 0.7313 & 0.9495 \\
+tfqkd\_unknown & LSTM & 0.7875 & 0.7930 & 0.9586 \\
+tfqkd\_unknown & TRANSFORMER & 0.8938 & 0.8993 & 0.9917 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Autoencoder Zero-Shot Anomaly Detection Performance}
+\label{tab:anomaly_metrics}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Evaluation Domain} & \textbf{ROC-AUC} & \textbf{Avg Precision (PR)} & \textbf{F1-Score} & \textbf{Threshold} \\ \midrule
+tfqkd\_clean & 0.8548 & 0.9695 & 0.2479 & 1.3773 \\
+tfqkd\_unknown & 0.8743 & 0.9884 & 0.4028 & 1.2699 \\
+tfqkd\_drift & 0.7601 & 0.9470 & 0.3030 & 1.1461 \\
+tfqkd\_asym & 0.8323 & 0.9605 & 0.2779 & 1.1980 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Physical Telemetry Feature Impact Analysis}
+\label{tab:telemetry_features}
+\begin{tabular}{@{}p{4.5cm}p{4cm}@{}}
+\toprule
+\textbf{Telemetry Feature} & \textbf{Primary Vulnerability Indicated} \\ \midrule
+Phase Lock Error (rad) & Ornstein-Uhlenbeck Phase Drift \\
+Visibility (Interference) & Reference Light Tampering \\
+QBER Phase / Bit & Detector Blinding / Wavelength Switching \\
+Reference Power (dBm) & Asymmetric Channel Loss \\
+Coincidence Rate & Synchronization Jitter \\
+\bottomrule
+\end{tabular}
+\end{table}
